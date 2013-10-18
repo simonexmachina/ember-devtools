@@ -4,7 +4,7 @@ A simple little initialiser that adds a `debug` object to your Ember.js app.
 
 # Usage
 
-    `bower install ember-debug --save`
+    bower install ember-debug --save
 
 When the code has been included in your app a `debug` object will be injected into your `Ember.Application` instance:
 
