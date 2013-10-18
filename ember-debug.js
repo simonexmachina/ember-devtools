@@ -28,13 +28,15 @@ Ember.onLoad('Ember.Application', function(Application) {
           return object.__proto__.constructor;
         },
         registry: container.registry.dict,
-        routes: Em.keys(app.Router.router.recognizer.names),
+        routes: function() {
+          return Em.keys(app.Router.router.recognizer.names)
+        },
         store: container.lookup("store:main"),
         typeMaps: container.lookup("store:main").typeMaps,
         templates: Em.keys(Ember.TEMPLATES),
         inspect: Em.inspect,
-        observersFor: function(observedObj, key){
-          Em.observersFor(observedObj, key);
+        observersFor: function(obj, property){
+          Em.observersFor(obj, property);
         }
       };
     }
