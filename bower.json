@@ -1,0 +1,22 @@
+{
+  "name": "ember-debug",
+  "main": "ember-debug.js",
+  "version": "0.1.0",
+  "authors": [
+    "Simon Wade <simon.wade@gmail.com>"
+  ],
+  "description": "A collection of useful Ember.js debugging functions.",
+  "keywords": [
+    "ember.js",
+    "debugging"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/simonwade/ember-debug",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
