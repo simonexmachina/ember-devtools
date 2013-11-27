@@ -4,17 +4,18 @@ Ember.onLoad('Ember.Application', function(Application) {
     name: 'debug',
     initialize: function(container, app) {
       app.debug = {
-        controller: function(name){
-          return container.lookup("controller:" + name);
+        container: container,
+        controller: function(name) {
+          return container.lookup('controller:' + name);
         },
-        route: function(name){
-          return container.lookup("route:" + name);
+        route: function(name) {
+          return container.lookup('route:' + name);
         },
-        view: function(domElem){
+        view: function(domElem) {
           return Em.View.views[domElem];
         },
         log: function(valueOrPromise) {
-          if( valueOrPromise.then ) {
+          if (valueOrPromise.then) {
             valueOrPromise.then(function(value) {
               console.log(value);
             });
@@ -30,16 +31,25 @@ Ember.onLoad('Ember.Application', function(Application) {
         lookup: function(name) {
           return container.lookup(name);
         },
+        containerNameFor: function(object) {
+          var name;
+          container.cache.eachLocal(function(key, value) {
+            if (value == object) {
+              name = key;
+            }
+          });
+          return name;
+        },
         router: function(name) {
-          name = name || "main";
-          return container.lookup("router:" + name).get('router');
+          name = name || 'main';
+          return container.lookup('router:' + name).get('router');
         },
         routes: function() {
           return Em.keys(this.router().recognizer.names)
         },
         templates: Em.keys(Ember.TEMPLATES),
         inspect: Em.inspect,
-        observersFor: function(obj, property){
+        observersFor: function(obj, property) {
           Em.observersFor(obj, property);
         },
         logResolver: function(bool) {
@@ -54,16 +64,16 @@ Ember.onLoad('Ember.Application', function(Application) {
           app.LOG_TRANSITIONS_INTERNAL = bool;
         },
         globalize: function() {
-          for( var prop in this ) {
-            if( this.hasOwnProperty(prop) ) {
+          for (var prop in this) {
+            if (this.hasOwnProperty(prop)) {
               window[prop] = window[prop] || this[prop];
             }
           }
         }
       };
-      if( DS ) {
-        app.debug.store = container.lookup("store:main");
-        app.debug.typeMaps = container.lookup("store:main").typeMaps;
+      if (typeof DS == 'object') {
+        app.debug.store = container.lookup('store:main');
+        app.debug.typeMaps = container.lookup('store:main').typeMaps;
       }
     }
   });
