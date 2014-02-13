@@ -1,7 +1,6 @@
 {
   "name": "ember-debug",
   "main": "ember-debug.js",
-  "version": "0.1.0",
   "authors": [
     "Simon Wade <simon.wade@gmail.com>"
   ],
