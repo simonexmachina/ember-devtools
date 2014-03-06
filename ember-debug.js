@@ -1,3 +1,4 @@
+/* global Ember */
 Ember.Application.initializer({
   name: 'debug',
   initialize: function(container, app) {
@@ -9,7 +10,7 @@ Ember.Application.initializer({
     var debug = app.debug = {
       container: container,
       controller: function(name) {
-        name = name || debug.currentPath();
+        name = name || debug.currentRouteName();
         return container.lookup('controller:' + name);
       },
       model: function(name) {
@@ -17,7 +18,7 @@ Ember.Application.initializer({
         return controller && controller.get('model');
       },
       route: function(name) {
-        name = name || debug.currentPath();
+        name = name || debug.currentRouteName();
         return container.lookup('route:' + name);
       },
       router: function(name) {
@@ -25,13 +26,16 @@ Ember.Application.initializer({
         return container.lookup('router:' + name).get('router');
       },
       routes: function() {
-        return Em.keys(debug.router().recognizer.names);
+        return Ember.keys(debug.router().recognizer.names);
       },
       view: function(id) {
         if (typeof id === 'object') {
           id = id.id;
         }
-        return Em.View.views[id];
+        return Ember.View.views[id];
+      },
+      currentRouteName: function() {
+        return debug.currentPath().split('.').slice(-2).join('.');
       },
       currentPath: function() {
         return debug.controller('application').get('currentPath');
@@ -62,17 +66,17 @@ Ember.Application.initializer({
         });
         return name;
       },
-      templates: Em.keys(Ember.TEMPLATES),
-      inspect: Em.inspect,
+      templates: Ember.keys(Ember.TEMPLATES),
+      inspect: Ember.inspect,
       observersFor: function(obj, property) {
-        Em.observersFor(obj, property);
+        Ember.observersFor(obj, property);
       },
       logResolver: function(bool) {
-        bool = typeof bool == 'undefined' ? true : bool;
-        Em.ENV.LOG_MODULE_RESOLVER = bool;
+        bool = typeof bool === 'undefined' ? true : bool;
+        Ember.ENV.LOG_MODULE_RESOLVER = bool;
       },
       logAll: function(bool) {
-        bool = typeof bool == 'undefined' ? true : bool;
+        bool = typeof bool === 'undefined' ? true : bool;
         app.LOG_ACTIVE_GENERATION = bool;
         app.LOG_VIEW_LOOKUPS = bool;
         app.LOG_TRANSITIONS = bool;
@@ -86,7 +90,7 @@ Ember.Application.initializer({
         }
       }
     };
-    if (typeof DS == 'object') {
+    if (typeof DS === 'object') {
       app.debug.store = container.lookup('store:main');
       app.debug.typeMaps = container.lookup('store:main').typeMaps;
     }
