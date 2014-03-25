@@ -39,10 +39,15 @@ Return the View instance with the specified id e.g. `ember352`. If an object
 is provided (such as a DOM element) then the `id` property of the object will be 
 used.
 
-### `log: function(valueOrPromise)`
+### `log: function(promise[, property[, getEach]])`
 
-Logs the specified value using `console.log`, or waits until it's resolved if 
-it has a `then` method (eg. it's a `Promise`).
+Resolves the `promise` and logs the resolved value using `console.log`.
+Also sets `window.$E` to the resolved value so you can access it in the dev 
+tools console.
+
+If `property` is specified then `$E.get(property)` will be logged.
+
+If `getEach` is true then `$E.getEach(property)` will be logged.
 
 ### `className: function(object)`
 

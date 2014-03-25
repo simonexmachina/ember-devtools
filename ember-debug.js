@@ -48,15 +48,14 @@ Ember.Application.initializer({
       currentPath: function() {
         return debug.controller('application').get('currentPath');
       },
-      log: function(valueOrPromise) {
-        if (valueOrPromise.then) {
-          valueOrPromise.then(function(value) {
-            console.log(value);
-          });
-        }
-        else {
-          console.log(valueOrPromise);
-        }
+      log: function(promise, property, getEach) {
+        promise.then(function(value) {
+          window.$E = value;
+          if (property) {
+            value = value[getEach ? 'getEach' : 'get'].call(value, property);
+          }
+          console.log(value);
+        });
       },
       className: function(object) {
         return object.__proto__.constructor;
