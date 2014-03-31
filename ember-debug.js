@@ -35,15 +35,7 @@ Ember.Application.initializer({
         return Ember.View.views[id];
       },
       currentRouteName: function() {
-        var router = debug.router(),
-            parts = debug.currentPath().split('.'),
-            i, path;
-        for (i = 0; i <= parts.length; i++)  {
-          path = parts.slice(i).join('.');
-          if (router.hasRoute(path)) {
-            return path;
-          }
-        }
+        return debug.controller('application').get('currentRouteName');
       },
       currentPath: function() {
         return debug.controller('application').get('currentPath');
