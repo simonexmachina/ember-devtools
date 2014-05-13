@@ -71,7 +71,7 @@ Searches the `container` registry to find the name for the specified object
 
 Returns the keys of all the `Ember.TEMPLATES`.
 
-### `inpsect`
+### `inspect`
 
 Does what it says, in a manner of speaking. Alias to `Ember.inspect`.
 
