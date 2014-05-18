@@ -1,6 +1,7 @@
 /* global Ember */
 Ember.Application.initializer({
   name: 'debug',
+  after: typeof DS !== 'undefined' ? 'store' : null,
   initialize: function(container, app) {
     function alias(name) {
       return function() {
@@ -89,9 +90,9 @@ Ember.Application.initializer({
         }
       }
     };
-    if (typeof DS === 'object') {
+    if (typeof DS !== 'undefined') {
       app.debug.store = container.lookup('store:main');
-      app.debug.typeMaps = container.lookup('store:main').typeMaps;
+      app.debug.typeMaps = app.debug.store.typeMaps;
     }
   }
 });
