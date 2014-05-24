@@ -18,11 +18,9 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "ember": "^1.5.0"
-  },
   "devDependencies": {
-    "ember-data": "~1.0.0-beta.7",
-    "ember-qunit": "~0.1.8"
+    "ember": "^1.6",
+    "ember-data": "^1.0.0-beta.7",
+    "ember-qunit": "^0.1.8"
   }
 }
