@@ -12,7 +12,7 @@
   "homepage": "https://github.com/aexmachina/ember-debug",
   "main": "dist/cjs/main.js",
   "scripts": {
-    "test": "bower install && karma start --single-run"
+    "test": "bower install && karma start --browsers Firefox --single-run"
   },
   "devDependencies": {
     "broccoli": "^0.12.0",
