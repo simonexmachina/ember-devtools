@@ -10,6 +10,15 @@ Ember.Application.initializer({
     }
     var debug = app.debug = {
       container: container,
+      consoleLog: window.console.log,
+      app: function(name) {
+        name = name || 'main';
+        return container.lookup('application:' + name);
+      },
+      route: function(name) {
+        name = name || debug.currentRouteName();
+        return container.lookup('route:' + name);
+      },
       controller: function(name) {
         name = name || debug.currentRouteName();
         return container.lookup('controller:' + name);
@@ -17,10 +26,6 @@ Ember.Application.initializer({
       model: function(name) {
         var controller = debug.controller(name);
         return controller && controller.get('model');
-      },
-      route: function(name) {
-        name = name || debug.currentRouteName();
-        return container.lookup('route:' + name);
       },
       router: function(name) {
         name = name || 'main';
@@ -42,12 +47,12 @@ Ember.Application.initializer({
         return debug.controller('application').get('currentPath');
       },
       log: function(promise, property, getEach) {
-        promise.then(function(value) {
+        return promise.then(function(value) {
           window.$E = value;
           if (property) {
             value = value[getEach ? 'getEach' : 'get'].call(value, property);
           }
-          console.log(value);
+          debug.consoleLog(value);
         });
       },
       className: function(object) {
@@ -56,6 +61,9 @@ Ember.Application.initializer({
       registry: container.registry.dict,
       lookup: function(name) {
         return container.lookup(name);
+      },
+      lookupFactory: function(name) {
+        return container.lookupFactory(name);
       },
       containerNameFor: function(object) {
         var name;
@@ -66,11 +74,10 @@ Ember.Application.initializer({
         });
         return name;
       },
-      templates: Ember.keys(Ember.TEMPLATES),
-      inspect: Ember.inspect,
-      observersFor: function(obj, property) {
-        Ember.observersFor(obj, property);
+      templates: function() {
+        return Ember.keys(Ember.TEMPLATES);
       },
+      inspect: Ember.inspect,
       logResolver: function(bool) {
         bool = typeof bool === 'undefined' ? true : bool;
         Ember.ENV.LOG_MODULE_RESOLVER = bool;
@@ -81,6 +88,7 @@ Ember.Application.initializer({
         app.LOG_VIEW_LOOKUPS = bool;
         app.LOG_TRANSITIONS = bool;
         app.LOG_TRANSITIONS_INTERNAL = bool;
+        logResolver(bool);
       },
       globalize: function() {
         for (var prop in this) {
@@ -91,8 +99,8 @@ Ember.Application.initializer({
       }
     };
     if (typeof DS !== 'undefined') {
-      app.debug.store = container.lookup('store:main');
-      app.debug.typeMaps = app.debug.store.typeMaps;
+      debug.store = container.lookup('store:main');
+      debug.typeMaps = debug.store.typeMaps;
     }
   }
 });
