@@ -1,5 +1,7 @@
 # ember-debug
 
+[![Build Status](https://travis-ci.org/aexmachina/ember-debug.png)](https://travis-ci.org/aexmachina/ember-debug)
+
 A simple little initialiser that adds a `debug` object to your Ember.js app. Provides a bunch of functions that can be useful when developing Ember apps.
 
 Best used from the console (see below).
