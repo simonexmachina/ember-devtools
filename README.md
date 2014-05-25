@@ -26,7 +26,7 @@ Then include it in your Ember app:
 
 ## Usage
 
-A `debug` object will be injected into your `Ember.Application` instance, however modern Ember apps don't usually make your `Application` instance accessible from the console. So you have two options:
+A `debug` object will be injected into your `Ember.Application` instance, however modern Ember apps don't usually make your `Application` instance accessible from the console, so you have two options:
 
 1. Attach your App to global scope and access `debug` at `App.debug`:
 
