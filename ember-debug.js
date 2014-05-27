@@ -10,6 +10,7 @@ Ember.Application.initializer({
     }
     var debug = app.debug = {
       container: container,
+      console: window.console,
       consoleLog: window.console.log,
       app: function(name) {
         name = name || 'main';
@@ -52,7 +53,7 @@ Ember.Application.initializer({
           if (property) {
             value = value[getEach ? 'getEach' : 'get'].call(value, property);
           }
-          debug.consoleLog(value);
+          debug.consoleLog.call(debug.console, value);
         });
       },
       className: function(object) {
