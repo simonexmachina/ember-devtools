@@ -1,24 +1,30 @@
 {
-  "name": "ember-debug",
+  "name": "ember-devtools",
   "authors": [
     "Simon Wade"
   ],
-  "description": "A collection of useful Ember.js debugging functions.",
+  "description": "A collection of functions that can be useful when developing Ember apps",
   "keywords": [
     "ember.js",
-    "debugging"
+    "debugging",
+    "ember-addon"
   ],
+  "files": [
+    "lib",
+    "test",
+    "ember-addon.js"
+  ],
+  "ember-addon-main": "ember-addon.js",
   "license": "MIT",
-  "homepage": "https://github.com/aexmachina/ember-debug",
-  "main": "dist/cjs/main.js",
+  "homepage": "https://github.com/aexmachina/ember-devtools",
   "scripts": {
     "test": "bower install && karma start --browsers PhantomJS --single-run"
   },
   "devDependencies": {
     "karma-phantomjs-launcher": "~0.1.2",
     "karma": "~0.10.9",
-    "qunitjs": "~1.12.0",
-    "karma-qunit": "~0.1.1",
+    "qunitjs": "^1.14.0",
+    "karma-qunit": "^0.1.3",
     "bower": "^1.2.8"
   }
 }
