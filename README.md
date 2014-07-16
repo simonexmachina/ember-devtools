@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/aexmachina/ember-devtools.png)](https://travis-ci.org/aexmachina/ember-devtools)
 
-A collection of functions that can be useful when developing Ember apps. Best used from the console (see below).
+A collection of functions that can be useful when developing Ember apps. Best used from the console.
 
 ## Usage
 
-ember-devtools uses an initializer to add a `devTools` object into your `Ember.Application` instance. However modern Ember apps don't usually make your `Application` instance accessible from the console, so you have two options:
+ember-devtools uses an initializer to add a `devTools` object to your `Ember.Application` instance. Modern Ember apps don't usually make your `Application` instance accessible from the console, so you have two options:
 
 1. Attach your App to global scope and access `devTools` at `App.devTools`:
 
