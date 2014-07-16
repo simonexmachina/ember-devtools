@@ -9,7 +9,7 @@ module.exports = function(config) {
       'bower_components/ember/ember.js',
       'bower_components/ember-data/ember-data.js',
       'bower_components/ember-qunit/dist/globals/main.js',
-      'ember-debug.js',
+      'lib/ember-devtools.js',
       'test/support/setup.js',
       'test/**/*.spec.js'
     ],
