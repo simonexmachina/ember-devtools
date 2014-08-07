@@ -15,7 +15,9 @@
     "test",
     "ember-addon.js"
   ],
-  "ember-addon-main": "ember-addon.js",
+  "ember-addon": {
+    "main": "ember-addon.js"
+  },
   "license": "MIT",
   "homepage": "https://github.com/aexmachina/ember-devtools",
   "scripts": {
