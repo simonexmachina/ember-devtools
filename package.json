@@ -4,6 +4,7 @@
   "authors": [
     "Simon Wade"
   ],
+  "repository": "https://github.com/aexmachina/ember-devtools.git",
   "description": "A collection of functions that can be useful when developing Ember apps",
   "keywords": [
     "ember.js",
