@@ -22,7 +22,7 @@
   "license": "MIT",
   "homepage": "https://github.com/aexmachina/ember-devtools",
   "scripts": {
-    "test": "bower install && karma start --browsers PhantomJS --single-run"
+    "test": "bower install && ./node_modules/karma/bin/karma start --browsers PhantomJS --single-run"
   },
   "devDependencies": {
     "bower": "^1.2.8",
