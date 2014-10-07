@@ -48,6 +48,10 @@ Returns the named router instance. `name` defaults to `main`.
 
 Returns the model for the named controller. `name` defaults to the the current route.
 
+### `service: function(name)`
+
+Performs a lookup for the named service in the `container` (using ``'service:' + name`).
+
 ### `view: function(idOrDomElement)`
 
 Return the View instance with the specified id e.g. `ember352`. If an object
