@@ -25,7 +25,7 @@ var registry = {
   'controller:bar': Ember.Controller.extend(),
   'router:foo': FooRouter.extend(),
   'view:foo': FooView,
-  'view:bar': FooView,
+  'view:bar': FooView
 };
 
 var Resolver = Ember.DefaultResolver.extend({

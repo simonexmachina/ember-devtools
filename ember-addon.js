@@ -1,4 +1,8 @@
 /* jshint node: true */
+module.exports = {
+
+};
+
 var path = require('path');
 var pickFiles = require('broccoli-static-compiler');
 

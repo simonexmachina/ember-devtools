@@ -81,10 +81,6 @@ If `getEach` is true then `$E.getEach(property)` will be logged.
 > log(store.find('organisation'), 'name', true) => array of names
 ```
 
-### `className: function(object)`
-
-Returns the class name of the object.
-
 ### `registry`
 
 Returns the hash of objects in the `container` registry.

@@ -1,29 +1,17 @@
 {
   "name": "ember-devtools",
-  "version": "1.0.6",
-  "authors": [
-    "Simon Wade"
-  ],
-  "description": "A collection of functions that can be useful when developing Ember apps",
-  "keywords": [
-    "ember.js",
-    "debugging"
-  ],
-  "license": "MIT",
-  "homepage": "https://github.com/aexmachina/ember-devtools",
-  "main": "lib/ember-devtools.js",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
-    "ember": "^1.5.0"
-  },
-  "devDependencies": {
-    "ember-data": "~1.0.0-beta.7",
-    "ember-qunit": "~0.1.8"
+    "handlebars": "~1.3.0",
+    "jquery": "^2.1.3",
+    "ember": "1.8.1",
+    "ember-data": "1.0.0-beta.14",
+    "ember-resolver": "~0.1.11",
+    "loader.js": "ember-cli/loader.js#1.0.1",
+    "ember-cli-shims": "ember-cli/ember-cli-shims#0.0.3",
+    "ember-cli-test-loader": "rwjblue/ember-cli-test-loader#0.0.4",
+    "ember-load-initializers": "ember-cli/ember-load-initializers#0.0.2",
+    "ember-qunit": "0.1.8",
+    "ember-qunit-notifications": "0.0.4",
+    "qunit": "~1.15.0"
   }
 }
