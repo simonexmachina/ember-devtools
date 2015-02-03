@@ -3,8 +3,8 @@ import Ember from 'ember';
 
 export default Ember.Object.extend({
   init: function() {
-    this.global = window;
-    this.console = window.console;
+    this.global = this.global || window;
+    this.console = this.console || window.console;
     this.registry = this.container.registry.dict || this.container.registry;
     if (DS !== undefined) {
       this.store = this.container.lookup('store:main');
@@ -92,10 +92,19 @@ export default Ember.Object.extend({
   },
   globalize: function() {
     var self = this;
-    ['app', 'container', 'registry', 'store', 'typeMaps',
+    var props = ['app', 'container', 'registry', 'store', 'typeMaps',
         'route', 'controller', 'model', 'service', 'routes', 'view', 'currentRouteName',
         'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
-        'inspect', 'logResolver', 'logAll'].map(function(name) {
+        'inspect', 'logResolver', 'logAll'];
+    // don't stomp on pre-existing global vars
+    var skipGlobalize = this.constructor.skipGlobalize;
+    if (skipGlobalize === null) {
+      skipGlobalize = this.constructor.skipGlobalize = props.filter(function(prop) {
+        return !Ember.isNone(self.global[prop]);
+      });
+    }
+    props.map(function(name) {
+      if (skipGlobalize.indexOf(name) !== -1) return;
       var prop = self[name];
       if (typeof prop === 'function') {
         prop = function() {
@@ -105,4 +114,6 @@ export default Ember.Object.extend({
       self.global[name] = prop;
     });
   }
+}).reopenClass({
+  skipGlobalize: null
 });

@@ -16,10 +16,11 @@ test('it exists', function() {
 
 test('log() resolves and logs the value', function() {
   var called = false;
-  var devTools = this.subject();
-  devTools.consoleLog = function(value) {
-    called = value;
-  };
+  var devTools = this.subject({
+    consoleLog: function(value) {
+      called = value;
+    }
+  });
   var promise = Ember.RSVP.resolve(true);
   stop();
   devTools.log(promise).then(function() {
@@ -30,10 +31,11 @@ test('log() resolves and logs the value', function() {
 
 test('log() resolves and logs a property', function() {
   var called = false;
-  var devTools = this.subject();
-  devTools.consoleLog = function(value) {
-    called = value;
-  };
+  var devTools = this.subject({
+    consoleLog: function(value) {
+      called = value;
+    }
+  });
   var promise = Ember.RSVP.resolve(Ember.Object.create({
     foo: 'bar'
   }));
@@ -46,10 +48,11 @@ test('log() resolves and logs a property', function() {
 
 test('log() resolves and logs using getEach()', function() {
   var called = false;
-  var devTools = this.subject();
-  devTools.consoleLog = function(value) {
-    called = value;
-  };
+  var devTools = this.subject({
+    consoleLog: function(value) {
+      called = value;
+    }
+  });
   var promise = Ember.RSVP.resolve([{
     foo: 'bar'
   }, {
@@ -77,6 +80,19 @@ test('inspect() is an alias to Ember.inspect', function() {
 });
 
 test('globalize() attaches stuff to the global scope', function() {
-  this.subject().globalize();
-  ok(window.container === this.subject().container);
+  var global = {};
+  var devTools = this.subject({
+    global: global
+  });
+  devTools.globalize();
+  ok(global.container === this.subject().container);
+});
+
+test('globalize() doesn\'t stomp on pre-existing global vars', function() {
+  var global = {container: 'foo'};
+  var devTools = this.subject({
+    global: global
+  });
+  devTools.globalize();
+  ok(global.container !== this.subject().container);
 });
