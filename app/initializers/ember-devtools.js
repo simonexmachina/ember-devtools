@@ -1,4 +1,4 @@
-import Ember from 'ember';
+/* global DS */
 import Devtools from '../services/ember-devtools';
 
 export default {
@@ -9,5 +9,12 @@ export default {
       container: container
     });
     container.register('service:devtools', app.devTools);
+    var config = app.emberDevTools || {};
+    if (config.global === true) {
+      app.devTools.globalize();
+    }
+    else if (config.global) {
+      window[config.global] = app.devTools;
+    }
   }
-}
+};

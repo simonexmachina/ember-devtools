@@ -72,11 +72,6 @@ test('lookup() returns instances', function() {
   ok(this.subject().lookup('store:main') instanceof DS.Store);
 });
 
-test('templates() returns the names of the defined templates', function() {
-  Ember.TEMPLATES['foo'] = true;
-  ok(~this.subject().templates().indexOf('foo'));
-});
-
 test('inspect() is an alias to Ember.inspect', function() {
   ok(this.subject().inspect === Ember.inspect);
 });

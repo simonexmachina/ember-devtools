@@ -8,7 +8,6 @@
     "debugging",
     "ember-addon"
   ],
-  "version": "1.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "directories": {
     "doc": "doc",

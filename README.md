@@ -6,25 +6,28 @@ A collection of functions that can be useful when developing Ember apps. Best us
 
 ## Usage
 
-ember-devtools uses an initializer to add a `devTools` object to your `Ember.Application` instance. Modern Ember apps don't usually make your `Application` instance accessible from the console, so you have two options:
+ember-devtools is an ember-cli addon that adds a handy `devTools` object to your `Ember.Application`.
+To access this from the console you have a few options:
 
+1. Set `emberDevTools.global` in your `config/environment.js`.
+
+    ```
+    var ENV = {
+      APP: {
+        emberDevTools: {global: true}
+    ```
+    You can then access the `devTools` functions globally (eg. you can run `routes()` in the console).
+    
+    If you'd prefer these functions to be under a prefix set `emberDevTools: {global: 'foo'}` for `foo.routes()`. 
 1. Attach your App to global scope and access `devTools` at `App.devTools`:
 
     ```
     var App = Ember.Application.extend({...});
     window.App = App;
     ```
-    You can then access `devTools` in the console as `App.devTools` (e.g. `App.devTools.routes()`)
-2. Or use `devTools.globalize()`:
-
-    ```
-    var App = Ember.Application.extend({
-      ready: function() {
-        this.devTools.globalize();
-      }
-    });
-    ```
-    You can then access the `devTools` functions globally (e.g. `routes()`)
+    You can then access `devTools` in the console as `App.devTools` (eg. `App.devTools.routes()`). 
+    The [ember-export-application-global](https://github.com/ember-cli/ember-export-application-global) 
+    module can also be used to access your app instance from global scope.
 
 ## Functions
 
@@ -100,10 +103,6 @@ which will in turn ask its `resolver` if it's not found.
 Searches the `container` registry to find the name for the specified object
 (if any).
 
-### `templates()`
-
-Returns the keys of all the `Ember.TEMPLATES`.
-
 ### `inspect`
 
 Does what it says, in a manner of speaking. Alias to `Ember.inspect`.
@@ -135,13 +134,6 @@ The Ember Data 'type map'.
 
 	npm install ember-devtools --save-dev
 
-### The Rest
-
-`bower install` as follows or just put `ember-devtools.js` somewhere.
-
-	bower install ember-devtools --save
-
-Then include it in your Ember app:
-
-	<script src="/vendor/ember-devtools/lib/ember-devtools.js"></script>
-
+### Upgrading From v2.0
+  
+ember-devtools is now dependent on ember-cli.

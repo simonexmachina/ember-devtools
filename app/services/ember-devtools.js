@@ -76,9 +76,6 @@ export default Ember.Object.extend({
       if (this.container.cache[keys[i]] === object) return keys[i];
     }
   },
-  templates: function() {
-    return Ember.keys(Ember.TEMPLATES);
-  },
   inspect: Ember.inspect,
   logResolver: function(bool) {
     bool = typeof bool === 'undefined' ? true : bool;
@@ -96,10 +93,16 @@ export default Ember.Object.extend({
   globalize: function() {
     var self = this;
     ['app', 'container', 'registry', 'store', 'typeMaps',
-      'route', 'controller', 'model', 'service', 'routes', 'view', 'currentRouteName',
-      'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor', 'templates',
-      'inspect', 'logResolver', 'logAll'].map(function(name) {
-      self.global[name] = self[name];
+        'route', 'controller', 'model', 'service', 'routes', 'view', 'currentRouteName',
+        'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
+        'inspect', 'logResolver', 'logAll'].map(function(name) {
+      var prop = self[name];
+      if (typeof prop === 'function') {
+        prop = function() {
+          return self[name].apply(self, arguments);
+        };
+      }
+      self.global[name] = prop;
     });
   }
 });

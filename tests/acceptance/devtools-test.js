@@ -4,7 +4,7 @@ import Devtools from 'dummy/services/ember-devtools';
 
 var app;
 
-module('Acceptance: Test', {
+module('Acceptance: ember-devtools', {
   setup: function() {
     app = startApp();
   },
@@ -120,6 +120,29 @@ test('currentPath() does what it says', function() {
   visit('/bar/nested/quz');
   andThen(function() {
     equal(app.devTools.currentPath(), 'bar.nested.quz');
+  });
+});
+
+module('Acceptance: emberDevTools.global', {
+  setup: function() {},
+  teardown: function() {
+    Ember.run(app, 'destroy');
+  }
+});
+
+test('emberDevTools.global: true', function() {
+  app = startApp({emberDevTools: {global: true}});
+  visit('/');
+  andThen(function() {
+    ok(typeof window.routes === 'function');
+  });
+});
+
+test('emberDevTools.global: foo', function() {
+  app = startApp({emberDevTools: {global: 'foo'}});
+  visit('/');
+  andThen(function() {
+    ok(typeof window.foo.routes === 'function');
   });
 });
 
