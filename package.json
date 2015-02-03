@@ -2,7 +2,7 @@
   "name": "ember-devtools",
   "version": "3.0.1",
   "description": "The default blueprint for ember-cli addons.",
-  "repository": "",
+  "repository": "https://github.com/aexmachina/ember-devtools.git",
   "keywords": [
     "ember.js",
     "debugging",
