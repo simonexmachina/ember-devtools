@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/aexmachina/ember-devtools.png)](https://travis-ci.org/aexmachina/ember-devtools)
 
-A collection of functions that can be useful when developing Ember apps. Best used from the console.
+A collection of useful functions for developing Ember apps. Best served from the console.
 
 ## Usage
 
