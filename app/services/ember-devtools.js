@@ -5,7 +5,7 @@ export default Ember.Object.extend({
   init: function() {
     this.global = this.global || window;
     this.console = this.console || window.console;
-    this.registry = this.container.registry.dict || this.container.registry;
+    this.registry = this.container.registrations || this.container.registry.dict || this.container.registry;
     if (DS !== undefined) {
       this.store = this.container.lookup('store:main');
       this.typeMaps = this.store.typeMaps;
