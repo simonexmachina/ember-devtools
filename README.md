@@ -1,6 +1,8 @@
+[<img align='right' alt='Build Status' src='https://travis-ci.org/aexmachina/ember-devtools.png'>](https://travis-ci.org/aexmachina/ember-devtools)
+
 # ember-devtools
 
-[![Build Status](https://travis-ci.org/aexmachina/ember-devtools.png)](https://travis-ci.org/aexmachina/ember-devtools)
+#### [Visit project page and demo](http://aexmachina.info/ember-devtools)
 
 A collection of useful functions for developing Ember apps. Best served from the console.
 
