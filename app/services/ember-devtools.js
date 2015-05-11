@@ -1,8 +1,8 @@
 /* global DS */
 import Ember from 'ember';
 
-var map = Ember.ArrayPolyfills.map,
-  $ = Ember.$;
+var map = Ember.ArrayPolyfills.map;
+var $ = Ember.$;
 
 export default Ember.Object.extend({
   init: function() {
@@ -43,11 +43,11 @@ export default Ember.Object.extend({
   routes: function() {
     return Ember.keys(this.router().recognizer.names);
   },
-  view: function(idOrSelector) {
-    if (typeof idOrSelector === 'object') {
-      idOrSelector = idOrSelector.id;
+  view: function(idDomElementOrSelector) {
+    if (typeof idDomElementOrSelector === 'object') {
+      idDomElementOrSelector = idDomElementOrSelector.id;
     }
-    return Ember.View.views[idOrSelector] || this.views(idOrSelector)[0];
+    return Ember.View.views[idDomElementOrSelector] || this.views(idDomElementOrSelector)[0];
   },
   views: function (selectorOrName) {
     var views = Ember.View.views;
@@ -64,6 +64,9 @@ export default Ember.Object.extend({
     return map.call($(selectorOrName), function (element) {
       return views[element.id];
     });
+  },
+  component: function () {
+    return this.view.apply(this, arguments);
   },
   components: function () {
     return this.views.apply(this, arguments);

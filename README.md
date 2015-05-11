@@ -61,14 +61,18 @@ Performs a lookup for the named service in the `container` (using ``'service:' +
 
 Return the View instance with the specified id e.g. `ember352`. If an object
 is provided (such as a DOM element) then the `id` property of the object will be
-used. You can also specifiy a selector or a view name, in which case, `view` will
+used. You can also specify a selector or a view name, in which case, `view` will
 return the first match. If you want multiple matches, use `views`.
 
 ### `views: function(viewNameOrSelector)`
 
-Returns all view instances for a given type or selector `select` or `.ember-select`. If the string resolves to a
-component or view name then returns all the views of that type or its sub-types. Otherwise the string is used as a selector.
+Returns all view instances for a given type or selector (eg. `select` or `.ember-select`). If the string resolves to a
+component or view name then returns all the views of that type (or its sub-types). Otherwise the string is used as a selector.
 If nothing matches an empty array is returned.
+
+### `component: function(viewNameOrSelector)`
+
+Alias for `view`, since `Ember.Component` inherits from `Ember.View`.
 
 ### `components: function(viewNameOrSelector)`
 
