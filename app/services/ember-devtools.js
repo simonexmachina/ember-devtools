@@ -1,6 +1,9 @@
 /* global DS */
 import Ember from 'ember';
 
+var map = Ember.ArrayPolyfills.map,
+  $ = Ember.$;
+
 export default Ember.Object.extend({
   init: function() {
     this.global = this.global || window;
@@ -40,11 +43,30 @@ export default Ember.Object.extend({
   routes: function() {
     return Ember.keys(this.router().recognizer.names);
   },
-  view: function(id) {
-    if (typeof id === 'object') {
-      id = id.id;
+  view: function(idOrSelector) {
+    if (typeof idOrSelector === 'object') {
+      idOrSelector = idOrSelector.id;
     }
-    return Ember.View.views[id];
+    return Ember.View.views[idOrSelector] || this.views(idOrSelector)[0];
+  },
+  views: function (selectorOrName) {
+    var views = Ember.View.views;
+    var viewClass =  this.lookupFactory('component:' + selectorOrName) || this.lookupFactory('view:' + selectorOrName);
+
+    if (viewClass) {
+      return Object.keys(views).map(function (id) {
+        return views[id];
+      }).filter(function (view) {
+        return view instanceof viewClass;
+      });
+    }
+
+    return map.call($(selectorOrName), function (element) {
+      return views[element.id];
+    });
+  },
+  components: function () {
+    return this.views.apply(this, arguments);
   },
   currentRouteName: function() {
     return this.controller('application').get('currentRouteName');

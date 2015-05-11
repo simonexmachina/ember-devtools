@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import startApp from '../helpers/start-app';
 import Devtools from 'dummy/services/ember-devtools';
+import TestComponent from 'dummy/components/test-component';
+import FooView from 'dummy/views/foo';
 
 var app;
 
@@ -106,6 +108,51 @@ test('view() returns a view for an element id', function() {
     var $el = Ember.$('.ember-view');
     var view = app.devTools.view($el.attr('id'));
     ok(view instanceof Ember.View);
+  });
+});
+
+test('view() returns a view for a component-name', function() {
+  visit('/foo');
+  andThen(function() {
+    var view = app.devTools.view('test-component');
+    ok(view instanceof TestComponent);
+  });
+});
+
+test('view() returns the first view that matches a selector', function() {
+  visit('/foo');
+  andThen(function() {
+    var view = app.devTools.view('.ember-view');
+    ok(view instanceof Ember.View);
+  });
+});
+
+test('views() returns all views that match a view type', function() {
+  visit('/foo');
+  andThen(function() {
+    var views = app.devTools.views('foo');
+    equal(views.length, 1);
+    ok(views[0] instanceof FooView);
+  });
+});
+
+test('views() returns all views that match a component type', function() {
+  visit('/foo');
+  andThen(function() {
+    var views = app.devTools.views('test-component');
+    equal(views.length, 2);
+    ok(views[0] instanceof TestComponent);
+    ok(views[1] instanceof TestComponent);
+  });
+});
+
+test('views() returns all views that match a selector', function() {
+  visit('/foo');
+  andThen(function() {
+    var views = app.devTools.views('.test-component');
+    equal(views.length, 2);
+    ok(views[0] instanceof TestComponent);
+    ok(views[1] instanceof TestComponent);
   });
 });
 

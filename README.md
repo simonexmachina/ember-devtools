@@ -19,16 +19,16 @@ To access this from the console you have a few options:
         emberDevTools: {global: true}
     ```
     You can then access the `devTools` functions globally (eg. you can run `routes()` in the console).
-    
-    If you'd prefer these functions to be under a prefix set `emberDevTools: {global: 'foo'}` for `foo.routes()`. 
+
+    If you'd prefer these functions to be under a prefix set `emberDevTools: {global: 'foo'}` for `foo.routes()`.
 1. Attach your App to global scope and access `devTools` at `App.devTools`:
 
     ```
     var App = Ember.Application.extend({...});
     window.App = App;
     ```
-    You can then access `devTools` in the console as `App.devTools` (eg. `App.devTools.routes()`). 
-    The [ember-export-application-global](https://github.com/ember-cli/ember-export-application-global) 
+    You can then access `devTools` in the console as `App.devTools` (eg. `App.devTools.routes()`).
+    The [ember-export-application-global](https://github.com/ember-cli/ember-export-application-global)
     module can also be used to access your app instance from global scope.
 
 ## Functions
@@ -57,11 +57,22 @@ Returns the model for the named controller. `name` defaults to the the current r
 
 Performs a lookup for the named service in the `container` (using ``'service:' + name`).
 
-### `view: function(idOrDomElement)`
+### `view: function(idDomElementOrSelector)`
 
 Return the View instance with the specified id e.g. `ember352`. If an object
 is provided (such as a DOM element) then the `id` property of the object will be
-used.
+used. You can also specifiy a selector or a view name, in which case, `view` will
+return the first match. If you want multiple matches, use `views`.
+
+### `views: function(viewNameOrSelector)`
+
+Returns all view instances for a given type or selector `select` or `.ember-select`. If the string resolves to a
+component or view name then returns all the views of that type or its sub-types. Otherwise the string is used as a selector.
+If nothing matches an empty array is returned.
+
+### `components: function(viewNameOrSelector)`
+
+Alias for `views`, since `Ember.Component` inherits from `Ember.View`.
 
 ### `controller: function([name])`
 
@@ -137,5 +148,5 @@ The Ember Data 'type map'.
 	npm install ember-devtools --save-dev
 
 ### Upgrading From v2.0
-  
+
 ember-devtools is now dependent on ember-cli.
