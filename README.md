@@ -11,16 +11,21 @@ A collection of useful functions for developing Ember apps. Best served from the
 ember-devtools is an ember-cli addon that adds a handy `devTools` object to your `Ember.Application`.
 To access this from the console you have a few options:
 
-1. Set `emberDevTools.global` in your `config/environment.js`.
+1. Setup `ember-devtools` in your `config/environment.js`.
 
     ```
     var ENV = {
-      APP: {
-        emberDevTools: {global: true}
+      'ember-devtools': {
+        global: true,
+        enabled: environment === 'development'
+      }
+    }
     ```
-    You can then access the `devTools` functions globally (eg. you can run `routes()` in the console).
+    Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console).
 
-    If you'd prefer these functions to be under a prefix set `emberDevTools: {global: 'foo'}` for `foo.routes()`.
+    The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
+
+    If you'd prefer these functions to be under a prefix set `global: 'foo'` for `foo.routes()`.
 1. Attach your App to global scope and access `devTools` at `App.devTools`:
 
     ```

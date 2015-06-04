@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from '../helpers/start-app';
+import config from "dummy/config/environment";
 import Devtools from 'dummy/services/ember-devtools';
 import TestComponent from 'dummy/components/test-component';
 import FooView from 'dummy/views/foo';
@@ -8,10 +9,10 @@ import FooView from 'dummy/views/foo';
 var app;
 
 module('Acceptance: ember-devtools', {
-  setup: function() {
+  beforeEach: function() {
     app = startApp();
   },
-  teardown: function() {
+  afterEach: function() {
     Ember.run(app, 'destroy');
   }
 });
@@ -172,13 +173,37 @@ test('currentPath() does what it says', function(assert) {
 });
 
 module('Acceptance: emberDevTools.global', {
-  setup: function() {},
-  teardown: function() {
+  afterEach: function() {
     Ember.run(app, 'destroy');
   }
 });
 
-test('emberDevTools.global: true', function(assert) {
+test('global: true', function(assert) {
+  config['ember-devtools'] = {
+    enabled: true,
+    global: true
+  };
+  app = startApp();
+  visit('/');
+  andThen(function() {
+    assert.ok(typeof window.routes === 'function');
+  });
+});
+
+test('global: foo', function(assert) {
+  config['ember-devtools'] = {
+    enabled: true,
+    global: 'foo'
+  };
+  app = startApp();
+  visit('/');
+  andThen(function() {
+    assert.ok(typeof window.foo.routes === 'function');
+  });
+});
+
+
+test('legacy emberDevTools.global: true', function(assert) {
   app = startApp({emberDevTools: {global: true}});
   visit('/');
   andThen(function() {
@@ -186,7 +211,7 @@ test('emberDevTools.global: true', function(assert) {
   });
 });
 
-test('emberDevTools.global: foo', function(assert) {
+test('legacy emberDevTools.global: foo', function(assert) {
   app = startApp({emberDevTools: {global: 'foo'}});
   visit('/');
   andThen(function() {
