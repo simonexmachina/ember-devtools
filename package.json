@@ -1,7 +1,13 @@
 {
   "name": "ember-devtools",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "3.1.0",
+  "description": "A collection of useful functions for developing Ember apps",
+  "repository": "https://github.com/aexmachina/ember-devtools.git",
+  "keywords": [
+    "ember.js",
+    "debugging",
+    "ember-addon"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -15,7 +21,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "@aexmachina",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
