@@ -8,7 +8,7 @@ export default Ember.Object.extend({
   init: function() {
     this.global = this.global || window;
     this.console = this.console || window.console;
-    this.registry = this.container.registrations || this.container.registry.dict || this.container.registry;
+    this.registry = this._registry();
     if (DS !== undefined) {
       this.store = this.container.lookup('store:main');
       this.typeMaps = this.store.typeMaps;
@@ -96,9 +96,10 @@ export default Ember.Object.extend({
     return this.container.lookupFactory(name);
   },
   containerNameFor: function(object) {
-    var keys = Object.keys(this.container.cache);
+    var cache = this.container.cache || this.container._defaultContainer.cache;
+    var keys = Object.keys(cache);
     for (var i = 0; i < keys.length; i++) {
-      if (this.container.cache[keys[i]] === object) return keys[i];
+      if (cache[keys[i]] === object) return keys[i];
     }
   },
   inspect: Ember.inspect,
@@ -138,6 +139,16 @@ export default Ember.Object.extend({
       }
       self.global[name] = prop;
     });
+  },
+  _registry: function() {
+    var registry;
+    if (this.container._registry) {
+      registry = this.container._registry.registrations;
+    }
+    return registry ||
+      this.container.registrations ||
+      this.container.registry.dict ||
+      this.container.registry;
   }
 }).reopenClass({
   skipGlobalize: null
