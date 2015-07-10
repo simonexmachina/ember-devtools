@@ -1,11 +1,11 @@
 /* global DS */
 import Ember from 'ember';
 
-var map = Ember.ArrayPolyfills.map;
-var $ = Ember.$;
+const map = Ember.ArrayPolyfills.map,
+  $ = Ember.$;
 
 export default Ember.Object.extend({
-  init: function() {
+  init() {
     this.global = this.global || window;
     this.console = this.console || window.console;
     this.registry = this._registry();
@@ -14,44 +14,44 @@ export default Ember.Object.extend({
       this.typeMaps = this.store.typeMaps;
     }
   },
-  consoleLog: function() {
+  consoleLog() {
     this.console.log.apply(this.console, arguments);
   },
-  app: function(name) {
+  app(name) {
     name = name || 'main';
     return this.container.lookup('application:' + name);
   },
-  route: function(name) {
+  route(name) {
     name = name || this.currentRouteName();
     return this.container.lookup('route:' + name);
   },
-  controller: function(name) {
+  controller(name) {
     name = name || this.currentRouteName();
     return this.container.lookup('controller:' + name);
   },
-  model: function(name) {
+  model(name) {
     var controller = this.controller(name);
     return controller && controller.get('model');
   },
-  service: function(name) {
+  service(name) {
     return this.lookup('service:' + name);
   },
-  router: function(name) {
+  router(name) {
     name = name || 'main';
     return this.container.lookup('router:' + name).get('router');
   },
-  routes: function() {
+  routes() {
     return Ember.keys(this.router().recognizer.names);
   },
-  view: function(idDomElementOrSelector) {
+  view(idDomElementOrSelector) {
     if (typeof idDomElementOrSelector === 'object') {
       idDomElementOrSelector = idDomElementOrSelector.id;
     }
     return Ember.View.views[idDomElementOrSelector] || this.views(idDomElementOrSelector)[0];
   },
-  views: function (selectorOrName) {
-    var views = Ember.View.views;
-    var viewClass =  this.lookupFactory('component:' + selectorOrName) || this.lookupFactory('view:' + selectorOrName);
+  views(selectorOrName) {
+    const views = Ember.View.views,
+      viewClass =  this.lookupFactory('component:' + selectorOrName) || this.lookupFactory('view:' + selectorOrName);
 
     if (viewClass) {
       return Object.keys(views).map(function (id) {
@@ -65,19 +65,19 @@ export default Ember.Object.extend({
       return views[element.id];
     });
   },
-  component: function () {
+  component() {
     return this.view.apply(this, arguments);
   },
-  components: function () {
+  components() {
     return this.views.apply(this, arguments);
   },
-  currentRouteName: function() {
+  currentRouteName() {
     return this.controller('application').get('currentRouteName');
   },
-  currentPath: function() {
+  currentPath() {
     return this.controller('application').get('currentPath');
   },
-  log: function(promise, property, getEach) {
+  log(promise, property, getEach) {
     var self = this;
     return promise.then(function(value) {
       self.global.$E = value;
@@ -89,41 +89,41 @@ export default Ember.Object.extend({
       self.console.error(err);
     });
   },
-  lookup: function(name) {
+  lookup(name) {
     return this.container.lookup(name);
   },
-  lookupFactory: function(name) {
+  lookupFactory(name) {
     return this.container.lookupFactory(name);
   },
-  containerNameFor: function(object) {
-    var cache = this.container.cache || this.container._defaultContainer.cache;
-    var keys = Object.keys(cache);
+  containerNameFor(object) {
+    const cache = this.container.cache || this.container._defaultContainer.cache,
+      keys = Object.keys(cache);
     for (var i = 0; i < keys.length; i++) {
       if (cache[keys[i]] === object) return keys[i];
     }
   },
   inspect: Ember.inspect,
-  logResolver: function(bool) {
+  logResolver(bool) {
     bool = typeof bool === 'undefined' ? true : bool;
     Ember.ENV.LOG_MODULE_RESOLVER = bool;
   },
-  logAll: function(bool) {
+  logAll(bool) {
     bool = typeof bool === 'undefined' ? true : bool;
-    var app = this.app();
+    const app = this.app();
     app.LOG_ACTIVE_GENERATION = bool;
     app.LOG_VIEW_LOOKUPS = bool;
     app.LOG_TRANSITIONS = bool;
     app.LOG_TRANSITIONS_INTERNAL = bool;
     this.logResolver(bool);
   },
-  globalize: function() {
+  globalize() {
     var self = this;
-    var props = ['app', 'container', 'registry', 'store', 'typeMaps',
+    const props = ['app', 'container', 'registry', 'store', 'typeMaps',
         'route', 'controller', 'model', 'service', 'routes', 'view', 'currentRouteName',
         'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
         'inspect', 'logResolver', 'logAll'];
     // don't stomp on pre-existing global vars
-    var skipGlobalize = this.constructor.skipGlobalize;
+    let skipGlobalize = this.constructor.skipGlobalize;
     if (skipGlobalize === null) {
       skipGlobalize = this.constructor.skipGlobalize = props.filter(function(prop) {
         return !Ember.isNone(self.global[prop]);
@@ -131,7 +131,7 @@ export default Ember.Object.extend({
     }
     props.map(function(name) {
       if (skipGlobalize.indexOf(name) !== -1) return;
-      var prop = self[name];
+      let prop = self[name];
       if (typeof prop === 'function') {
         prop = function() {
           return self[name].apply(self, arguments);
@@ -140,8 +140,8 @@ export default Ember.Object.extend({
       self.global[name] = prop;
     });
   },
-  _registry: function() {
-    var registry;
+  _registry() {
+    let registry;
     if (this.container._registry) {
       registry = this.container._registry.registrations;
     }
