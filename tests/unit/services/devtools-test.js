@@ -6,7 +6,7 @@ import {
 
 moduleFor('service:ember-devtools', 'DevtoolsService', {
 }, function(container, context, defaultSubject) {
-  container.register('store:main', DS.Store);
+  container.register('service:store', DS.Store);
 });
 
 test('it exists', function(assert) {
@@ -65,11 +65,11 @@ test('log() resolves and logs using getEach()', function(assert) {
 });
 
 test('registry contains factories', function(assert) {
-  assert.ok('store:main' in this.subject().registry);
+  assert.ok('service:store' in this.subject().registry);
 });
 
 test('lookup() returns instances', function(assert) {
-  assert.ok(this.subject().lookup('store:main') instanceof DS.Store);
+  assert.ok(this.subject().lookup('service:store') instanceof DS.Store);
 });
 
 test('inspect() is an alias to Ember.inspect', function(assert) {

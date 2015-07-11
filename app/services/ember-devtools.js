@@ -10,7 +10,7 @@ export default Ember.Object.extend({
     this.console = this.console || window.console;
     this.registry = this._registry();
     if (DS !== undefined) {
-      this.store = this.container.lookup('store:main');
+      this.store = this.container.lookup('service:store');
       this.typeMaps = this.store.typeMaps;
     }
   },
