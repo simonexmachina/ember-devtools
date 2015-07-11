@@ -4,13 +4,12 @@ import Ember from 'ember';
 const map = Ember.ArrayPolyfills.map,
   $ = Ember.$;
 
-export default Ember.Object.extend({
+export default Ember.Service.extend({
   init() {
     this.global = this.global || window;
     this.console = this.console || window.console;
     this.registry = this._registry();
     if (DS !== undefined) {
-      this.store = this.container.lookup('service:store');
       this.typeMaps = this.store.typeMaps;
     }
   },
