@@ -20,7 +20,7 @@ module.exports = function(environment) {
 
     'ember-devtools': {
       enabled: true,
-      global: true
+      global: 'devTools'
     }
   };
 

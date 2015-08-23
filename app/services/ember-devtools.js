@@ -1,83 +1,74 @@
 /* global DS */
 import Ember from 'ember';
+var {
+  $,
+  Service
+} = Ember;
 
-var map = Ember.ArrayPolyfills.map;
-var $ = Ember.$;
-
-export default Ember.Object.extend({
-  init: function() {
+export default Service.extend({
+  container: null,
+  init() {
     this.global = this.global || window;
     this.console = this.console || window.console;
-    this.registry = this._registry();
-    if (DS !== undefined) {
+    if (typeof DS === 'object') {
       this.store = this.container.lookup('store:main');
       this.typeMaps = this.store.typeMaps;
     }
   },
-  consoleLog: function() {
+  consoleLog() {
     this.console.log.apply(this.console, arguments);
   },
-  app: function(name) {
+  app(name) {
     name = name || 'main';
     return this.container.lookup('application:' + name);
   },
-  route: function(name) {
+  route(name) {
     name = name || this.currentRouteName();
     return this.container.lookup('route:' + name);
   },
-  controller: function(name) {
+  controller(name) {
     name = name || this.currentRouteName();
     return this.container.lookup('controller:' + name);
   },
-  model: function(name) {
+  model(name) {
     var controller = this.controller(name);
     return controller && controller.get('model');
   },
-  service: function(name) {
+  service(name) {
     return this.lookup('service:' + name);
   },
-  router: function(name) {
+  router(name) {
     name = name || 'main';
     return this.container.lookup('router:' + name).get('router');
   },
-  routes: function() {
-    return Ember.keys(this.router().recognizer.names);
+  routes() {
+    return Object.keys(this.router().recognizer.names);
   },
-  view: function(idDomElementOrSelector) {
-    if (typeof idDomElementOrSelector === 'object') {
-      idDomElementOrSelector = idDomElementOrSelector.id;
-    }
-    return Ember.View.views[idDomElementOrSelector] || this.views(idDomElementOrSelector)[0];
-  },
-  views: function (selectorOrName) {
-    var views = Ember.View.views;
-    var viewClass =  this.lookupFactory('component:' + selectorOrName) || this.lookupFactory('view:' + selectorOrName);
-
-    if (viewClass) {
-      return Object.keys(views).map(function (id) {
-        return views[id];
-      }).filter(function (view) {
-        return view instanceof viewClass;
-      });
-    }
-
-    return map.call($(selectorOrName), function (element) {
-      return views[element.id];
-    });
-  },
-  component: function () {
-    return this.view.apply(this, arguments);
-  },
-  components: function () {
-    return this.views.apply(this, arguments);
-  },
-  currentRouteName: function() {
+  //component(idDomElementOrSelector) {
+  //  if (typeof idDomElementOrSelector === 'object') {
+  //    idDomElementOrSelector = idDomElementOrSelector.id;
+  //  }
+  //  return Ember.Component.views[idDomElementOrSelector] || this.components(idDomElementOrSelector)[0];
+  //},
+  //components(selectorOrName) {
+  //  var views = Ember.Component.views;
+  //  var componentClass =  this.lookupFactory('component:' + selectorOrName);
+  //
+  //  if (componentClass) {
+  //    return Object.keys(views).map(id => views[id])
+  //      .filter(component => component instanceof componentClass);
+  //  }
+  //  else {
+  //    return $(selectorOrName).map((ix, element) => views[element.id]);
+  //  }
+  //},
+  currentRouteName() {
     return this.controller('application').get('currentRouteName');
   },
-  currentPath: function() {
+  currentPath() {
     return this.controller('application').get('currentPath');
   },
-  log: function(promise, property, getEach) {
+  log(promise, property, getEach) {
     var self = this;
     return promise.then(function(value) {
       self.global.$E = value;
@@ -89,13 +80,13 @@ export default Ember.Object.extend({
       self.console.error(err);
     });
   },
-  lookup: function(name) {
+  lookup(name) {
     return this.container.lookup(name);
   },
-  lookupFactory: function(name) {
+  lookupFactory(name) {
     return this.container.lookupFactory(name);
   },
-  containerNameFor: function(object) {
+  containerNameFor(object) {
     var cache = this.container.cache || this.container._defaultContainer.cache;
     var keys = Object.keys(cache);
     for (var i = 0; i < keys.length; i++) {
@@ -103,11 +94,11 @@ export default Ember.Object.extend({
     }
   },
   inspect: Ember.inspect,
-  logResolver: function(bool) {
+  logResolver(bool) {
     bool = typeof bool === 'undefined' ? true : bool;
     Ember.ENV.LOG_MODULE_RESOLVER = bool;
   },
-  logAll: function(bool) {
+  logAll(bool) {
     bool = typeof bool === 'undefined' ? true : bool;
     var app = this.app();
     app.LOG_ACTIVE_GENERATION = bool;
@@ -116,9 +107,9 @@ export default Ember.Object.extend({
     app.LOG_TRANSITIONS_INTERNAL = bool;
     this.logResolver(bool);
   },
-  globalize: function() {
+  globalize() {
     var self = this;
-    var props = ['app', 'container', 'registry', 'store', 'typeMaps',
+    var props = ['app', 'container', 'store', 'typeMaps',
         'route', 'controller', 'model', 'service', 'routes', 'view', 'currentRouteName',
         'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
         'inspect', 'logResolver', 'logAll'];
@@ -139,16 +130,6 @@ export default Ember.Object.extend({
       }
       self.global[name] = prop;
     });
-  },
-  _registry: function() {
-    var registry;
-    if (this.container._registry) {
-      registry = this.container._registry.registrations;
-    }
-    return registry ||
-      this.container.registrations ||
-      this.container.registry.dict ||
-      this.container.registry;
   }
 }).reopenClass({
   skipGlobalize: null

@@ -1,1 +1,0 @@
-export { default } from 'ember-devtools/service-tests/ember-devtools';

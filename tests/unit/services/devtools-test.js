@@ -4,10 +4,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('service:ember-devtools', 'DevtoolsService', {
-}, function(container, context, defaultSubject) {
-  container.register('store:main', DS.Store);
-});
+moduleFor('service:ember-devtools', 'DevtoolsService');
 
 test('it exists', function(assert) {
   var service = this.subject();
@@ -62,10 +59,6 @@ test('log() resolves and logs using getEach()', function(assert) {
     assert.equal(called[0], 'bar');
     assert.equal(called[1], 'baz');
   });
-});
-
-test('registry contains factories', function(assert) {
-  assert.ok('store:main' in this.subject().registry);
 });
 
 test('lookup() returns instances', function(assert) {

@@ -1,5 +1,4 @@
-'use strict';
-
+/* jshint node:true */
 var objectAssign = require('object-assign');
 
 /**

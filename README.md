@@ -8,86 +8,56 @@ A collection of useful functions for developing Ember apps. Best served from the
 
 ## Usage
 
-ember-devtools is an ember-cli addon that adds a handy `devTools` object to your `Ember.Application`.
-To access this from the console you have a few options:
+ember-devtools is an `Ember.Service` that can be accessed from the container, although it's most
+useful when available in the console. The simplest was access this from the console is using
+a global variable (eww!) which can be defined in `config/environment.js`.
 
-1. Setup `ember-devtools` in your `config/environment.js`.
+```js
+var ENV = {
+  'ember-devtools': {
+    global: true,
+    enabled: environment === 'development'
+  }
+}
+```
 
-    ```
-    var ENV = {
-      'ember-devtools': {
-        global: true,
-        enabled: environment === 'development'
-      }
-    }
-    ```
-    Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console).
+Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console). If you'd prefer these functions to be under a prefix set `global: 'foo'` for `foo.routes()`.
 
-    The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
+The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
 
-    If you'd prefer these functions to be under a prefix set `global: 'foo'` for `foo.routes()`.
-1. Attach your App to global scope and access `devTools` at `App.devTools`:
-
-    ```
-    var App = Ember.Application.extend({...});
-    window.App = App;
-    ```
-    You can then access `devTools` in the console as `App.devTools` (eg. `App.devTools.routes()`).
-    The [ember-export-application-global](https://github.com/ember-cli/ember-export-application-global)
-    module can also be used to access your app instance from global scope.
+Alternatively you can use `Ember.inject.service('ember-devtools')` or `container.lookup('service:ember-devtools')`.
 
 ## Functions
 
-### `app: function([name])`
+### `app([name])`
 
 Returns the named application. `name` defaults to `main`.
 
-### `routes: function()`
+### `routes()`
 
 Returns the names of all routes.
 
-### `route: function([name])`
+### `route([name])`
 
 Returns the named route. `name` defaults to the current route.
 
-### `router: function([name])`
+### `router([name])`
 
 Returns the named router instance. `name` defaults to `main`.
 
-### `model: function([name])`
+### `model([name])`
 
 Returns the model for the named controller. `name` defaults to the the current route.
 
-### `service: function(name)`
+### `service(name)`
 
 Performs a lookup for the named service in the `container` (using ``'service:' + name`).
 
-### `view: function(idDomElementOrSelector)`
-
-Return the View instance with the specified id e.g. `ember352`. If an object
-is provided (such as a DOM element) then the `id` property of the object will be
-used. You can also specify a selector or a view name, in which case, `view` will
-return the first match. If you want multiple matches, use `views`.
-
-### `views: function(viewNameOrSelector)`
-
-Returns all view instances for a given type or selector (eg. `select` or `.ember-select`). If the string resolves to a
-component or view name then returns all the views of that type (or its sub-types). Otherwise the string is used as a selector.
-If nothing matches an empty array is returned.
-
-### `component: function(viewNameOrSelector)`
-
-Alias for `view`, since `Ember.Component` inherits from `Ember.View`.
-
-### `components: function(viewNameOrSelector)`
-
-Alias for `views`, since `Ember.Component` inherits from `Ember.View`.
-
-### `controller: function([name])`
+### `controller([name])`
 
 Returns the named controller. `name` defaults to the current route.
 
-### `log: function(promise[, property[, getEach]])`
+### `log(promise[, property[, getEach]])`
 
 Resolves the `promise` and logs the resolved value using `console.log`.
 Also sets `window.$E` to the resolved value so you can access it in the dev
@@ -106,38 +76,33 @@ If `getEach` is true then `$E.getEach(property)` will be logged.
 > log(store.find('organisation'), 'name', true) => array of names
 ```
 
-### `registry`
-
-Returns the hash of objects in the `container` registry.
-
-### `lookup: function(name)`
+### `lookup(name)`
 
 Performs a lookup for the named entry in the `container`, which will in turn
 ask its `resolver` if it's not found.
 
-### `lookupFactory: function(name)`
+### `lookupFactory(name)`
 
 Performs a lookup for the named factory (as opposed to a new instance) in the `container`,
 which will in turn ask its `resolver` if it's not found.
 
-### `containerNameFor: function(obj)`
+### `containerNameFor(obj)`
 
-Searches the `container` registry to find the name for the specified object
-(if any).
+Searches the `container` to find the name for the specified object (if any).
 
 ### `inspect`
 
 Does what it says, in a manner of speaking. Alias to `Ember.inspect`.
 
-### `logResolver: function(bool = true)`
+### `logResolver(bool = true)`
 
 Switch logging for the resolver on or off.
 
-### `logAll: function(bool = true)`
+### `logAll(bool = true)`
 
 Switch logging for all the things on/off.
 
-### `globalize: function()`
+### `globalize()`
 
 Attach all of these useful functions to the `window` object (eww!) - useful
 for accessing in the console.
