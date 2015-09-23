@@ -33,10 +33,10 @@
     "ember-cli-release": "0.2.3",
     "ember-cli-sri": "^1.0.3",
     "ember-cli-uglify": "^1.2.0",
-    "ember-data": "^1.13.11",
+    "ember-data": "^2.0.1",
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-disable-proxy-controllers": "^1.0.0",
-    "ember-export-application-global": "^1.0.3",
+    "ember-export-application-global": "^1.0.4",
     "ember-try": "0.0.6"
   },
   "dependencies": {

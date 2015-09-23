@@ -7,9 +7,9 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('foo');
-  this.resource('bar', function() {
+  this.route('bar', {resetNamespace: true}, function() {
     this.route('baz');
-    this.resource('nested', function() {
+    this.route('nested', {resetNamespace: true}, function() {
       this.route('quz');
     });
   });

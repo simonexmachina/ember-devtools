@@ -62,7 +62,7 @@ test('log() resolves and logs using getEach()', function(assert) {
 });
 
 test('lookup() returns instances', function(assert) {
-  assert.ok(this.subject().lookup('store:main') instanceof DS.Store);
+  assert.ok(this.subject().lookup('service:store') instanceof DS.Store);
 });
 
 test('inspect() is an alias to Ember.inspect', function(assert) {

@@ -11,7 +11,8 @@ export default Service.extend({
     this.global = this.global || window;
     this.console = this.console || window.console;
     if (typeof DS === 'object') {
-      this.store = this.container.lookup('store:main');
+      this.store = this.container.lookup('service:store') ||
+          this.container.lookup('store:main'); // for ember-data < 2
       this.typeMaps = this.store.typeMaps;
     }
   },
