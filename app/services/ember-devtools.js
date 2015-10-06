@@ -108,6 +108,34 @@ export default Service.extend({
     app.LOG_TRANSITIONS_INTERNAL = bool;
     this.logResolver(bool);
   },
+  logRenders() {
+    var colorForRender = this.colorForRender;
+
+    Ember.subscribe('render', {
+      before(name, start, payload) {
+        return start;
+      },
+      after(name, end, payload, start) {
+        var id = payload.containerKey;
+        if (!id) return;
+
+        var duration = Math.round(end - start);
+        var color = colorForRender(duration);
+
+        console.log('%c rendered ' + id + ' in ' + duration + 'ms', 'color: ' + color);
+      }
+    });
+  },
+  colorForRender(duration) {
+    var ok = '#000000';
+    var warning = '#F1B178';
+    var serious = '#E86868';
+
+    if (duration < 300) return ok;
+    if (duration < 600) return warning;
+
+    return serious;
+  },
   globalize() {
     var self = this;
     var props = ['app', 'container', 'store', 'typeMaps',
