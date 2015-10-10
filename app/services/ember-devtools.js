@@ -7,6 +7,7 @@ var {
 
 export default Service.extend({
   container: null,
+  renderedComponents: {},
   init() {
     this.global = this.global || window;
     this.console = this.console || window.console;
@@ -109,7 +110,7 @@ export default Service.extend({
     this.logResolver(bool);
   },
   logRenders() {
-    var colorForRender = this.colorForRender;
+    var self = this;
 
     Ember.subscribe('render', {
       before(name, start, payload) {
@@ -120,7 +121,15 @@ export default Service.extend({
         if (!id) return;
 
         var duration = Math.round(end - start);
-        var color = colorForRender(duration);
+        var color = self.colorForRender(duration);
+        var logId = `renderedComponents.${id}`;
+        var ocurrences = self.get(logId);
+
+        if (!ocurrences) {
+          self.set(logId, []);
+        }
+        
+        self.get(logId).push(duration);
 
         console.log('%c rendered ' + id + ' in ' + duration + 'ms', 'color: ' + color);
       }
