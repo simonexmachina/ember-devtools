@@ -102,6 +102,10 @@ Switch logging for the resolver on or off.
 
 Switch logging for all the things on/off.
 
+### `logRenders()`
+
+Logs the rendering duration (in milliseconds) of each component, view and helper.
+
 ### `globalize()`
 
 Attach all of these useful functions to the `window` object (eww!) - useful
