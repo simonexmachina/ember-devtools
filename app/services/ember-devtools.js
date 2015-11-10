@@ -46,24 +46,12 @@ export default Service.extend({
   routes() {
     return Object.keys(this.router().recognizer.names);
   },
-  //component(idDomElementOrSelector) {
-  //  if (typeof idDomElementOrSelector === 'object') {
-  //    idDomElementOrSelector = idDomElementOrSelector.id;
-  //  }
-  //  return Ember.Component.views[idDomElementOrSelector] || this.components(idDomElementOrSelector)[0];
-  //},
-  //components(selectorOrName) {
-  //  var views = Ember.Component.views;
-  //  var componentClass =  this.lookupFactory('component:' + selectorOrName);
-  //
-  //  if (componentClass) {
-  //    return Object.keys(views).map(id => views[id])
-  //      .filter(component => component instanceof componentClass);
-  //  }
-  //  else {
-  //    return $(selectorOrName).map((ix, element) => views[element.id]);
-  //  }
-  //},
+  component(idDomElementOrSelector, type) {
+   if (typeof idDomElementOrSelector === 'object') {
+     idDomElementOrSelector = idDomElementOrSelector.id;
+   }
+   return this.lookup(`component:${type}::${idDomElementOrSelector}`);
+  },
   currentRouteName() {
     return this.controller('application').get('currentRouteName');
   },
@@ -148,8 +136,8 @@ export default Service.extend({
   globalize() {
     var self = this;
     var props = ['app', 'container', 'store', 'typeMaps',
-        'route', 'controller', 'model', 'service', 'routes', 'view', 'currentRouteName',
-        'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
+        'route', 'controller', 'model', 'service', 'routes', 'view', 'component', 
+        'currentRouteName', 'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
         'inspect', 'logResolver', 'logAll'];
     // don't stomp on pre-existing global vars
     var skipGlobalize = this.constructor.skipGlobalize;
