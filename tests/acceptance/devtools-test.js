@@ -8,6 +8,7 @@ import startApp from '../helpers/start-app';
 import config from "dummy/config/environment";
 
 var app;
+var componentType = 'test-component';
 
 module('Acceptance: ember-devtools', {
   beforeEach() {
@@ -89,23 +90,23 @@ test('routes() returns a list of route names', function(assert) {
   });
 });
 
-//test('component() returns a component for an element', function(assert) {
-//  visit('/foo');
-//  andThen(function() {
-//    var $el = Ember.$('.ember-view');
-//    var view = devTools.component($el.get(0));
-//    assert.ok(view instanceof Ember.Component);
-//  });
-//});
-//
-//test('component() returns a component for an element id', function(assert) {
-//  visit('/foo');
-//  andThen(function() {
-//    var $el = Ember.$('.ember-view');
-//    var view = devTools.component($el.attr('id'));
-//    assert.ok(view instanceof Ember.Component);
-//  });
-//});
+test('component() returns a component for an element', function(assert) {
+ visit('/foo');
+ andThen(function() {
+   var $el = Ember.$(`.${componentType}`);
+   var view = devTools.component($el.get(0), componentType);
+   assert.ok(view instanceof Ember.Component);
+ });
+});
+
+test('component() returns a component for an element id', function(assert) {
+ visit('/foo');
+ andThen(function() {
+   var $el = Ember.$(`.${componentType}`);
+   var view = devTools.component($el.attr('id'), componentType);
+   assert.ok(view instanceof Ember.Component);
+ });
+});
 //
 //test('component() returns a component for a component name', function(assert) {
 //  visit('/foo');
