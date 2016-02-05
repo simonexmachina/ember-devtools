@@ -123,6 +123,10 @@ The Ember Data `Store`.
 
 The Ember Data 'type map'.
 
+### `environment`
+
+Returns the Application environment
+
 ## Installation
 
 ### Ember CLI

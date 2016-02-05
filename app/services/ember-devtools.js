@@ -133,6 +133,9 @@ export default Service.extend({
 
     return serious;
   },
+  environment() {
+    return this.lookupFactory('config:environment');
+  },
   globalize() {
     var self = this;
     var props = ['app', 'container', 'store', 'typeMaps',
