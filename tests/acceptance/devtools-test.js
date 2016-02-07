@@ -107,6 +107,14 @@ test('component() returns a component for an element id', function(assert) {
    assert.ok(view instanceof Ember.Component);
  });
 });
+
+test('environment() returns application environment', function(assert) {
+ visit('/foo');
+ andThen(function() {
+   let env = devTools.environment();
+   assert.ok(env === config);
+ });
+});
 //
 //test('component() returns a component for a component name', function(assert) {
 //  visit('/foo');
