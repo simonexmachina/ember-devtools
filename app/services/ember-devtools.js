@@ -12,36 +12,34 @@ export default Service.extend({
     this.global = this.global || window;
     this.console = this.console || window.console;
     if (typeof DS === 'object') {
-      this.store = this.container.lookup('service:store') ||
-          this.container.lookup('store:main'); // for ember-data < 2
+      this.store = this.lookup('service:store') ||
+          this.lookup('store:main'); // for ember-data < 2
       this.typeMaps = this.store.typeMaps;
     }
   },
   consoleLog() {
-    this.console.log.apply(this.console, arguments);
+    this.console.log(...arguments);
   },
-  app(name) {
-    name = name || 'main';
-    return this.container.lookup('application:' + name);
+  app(name = 'main') {
+    return this.lookup(`application:${name}`);
   },
   route(name) {
     name = name || this.currentRouteName();
-    return this.container.lookup('route:' + name);
+    return this.lookup(`route:${name}`);
   },
   controller(name) {
     name = name || this.currentRouteName();
-    return this.container.lookup('controller:' + name);
+    return this.lookup(`controller:${name}`);
   },
   model(name) {
     var controller = this.controller(name);
     return controller && controller.get('model');
   },
   service(name) {
-    return this.lookup('service:' + name);
+    return this.lookup(`service:${name}`);
   },
-  router(name) {
-    name = name || 'main';
-    return this.container.lookup('router:' + name).get('router');
+  router(name = 'main') {
+    return this.lookup(`router:${name}`).get('router');
   },
   routes() {
     return Object.keys(this.router().recognizer.names);
@@ -59,15 +57,14 @@ export default Service.extend({
     return this.controller('application').get('currentPath');
   },
   log(promise, property, getEach) {
-    var self = this;
-    return promise.then(function(value) {
-      self.global.$E = value;
+    return promise.then((value) => {
+      this.global.$E = value;
       if (property) {
         value = value[getEach ? 'getEach' : 'get'].call(value, property);
       }
-      self.consoleLog(value);
-    }, function(err) {
-      self.console.error(err);
+      this.consoleLog(value);
+    }, (err) => {
+      this.console.error(err);
     });
   },
   lookup(name) {
@@ -84,12 +81,10 @@ export default Service.extend({
     }
   },
   inspect: Ember.inspect,
-  logResolver(bool) {
-    bool = typeof bool === 'undefined' ? true : bool;
+  logResolver(bool = true) {
     Ember.ENV.LOG_MODULE_RESOLVER = bool;
   },
-  logAll(bool) {
-    bool = typeof bool === 'undefined' ? true : bool;
+  logAll(bool = true) {
     var app = this.app();
     app.LOG_ACTIVE_GENERATION = bool;
     app.LOG_VIEW_LOOKUPS = bool;
@@ -137,7 +132,6 @@ export default Service.extend({
     return this.lookupFactory('config:environment');
   },
   globalize() {
-    var self = this;
     var props = ['app', 'container', 'store', 'typeMaps',
         'route', 'controller', 'model', 'service', 'routes', 'view', 'component', 
         'currentRouteName', 'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
@@ -145,19 +139,17 @@ export default Service.extend({
     // don't stomp on pre-existing global vars
     var skipGlobalize = this.constructor.skipGlobalize;
     if (skipGlobalize === null) {
-      skipGlobalize = this.constructor.skipGlobalize = props.filter(function(prop) {
-        return !Ember.isNone(self.global[prop]);
-      });
+      skipGlobalize = this.constructor.skipGlobalize = props.filter(prop => !Ember.isNone(this.global[prop]));
     }
-    props.map(function(name) {
+    props.map((name) => {
       if (skipGlobalize.indexOf(name) !== -1) return;
-      var prop = self[name];
+      var prop = this[name];
       if (typeof prop === 'function') {
         prop = function() {
-          return self[name].apply(self, arguments);
+          return this[name].apply(this, arguments);
         };
       }
-      self.global[name] = prop;
+      this.global[name] = prop;
     });
   }
 }).reopenClass({
