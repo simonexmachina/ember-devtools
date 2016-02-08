@@ -136,11 +136,9 @@ export default Service.extend({
     // don't stomp on pre-existing global vars
     var skipGlobalize = this.constructor.skipGlobalize;
     if (skipGlobalize === null) {
-      skipGlobalize = this.constructor.skipGlobalize = props.filter(function(prop) {
-        return !Ember.isNone(this.global[prop]);
-      }, this);
+      skipGlobalize = this.constructor.skipGlobalize = props.filter(prop => !Ember.isNone(this.global[prop]));
     }
-    props.map(function(name) {
+    props.map((name) => {
       if (skipGlobalize.indexOf(name) !== -1) return;
       var prop = this[name];
       if (typeof prop === 'function') {
@@ -149,7 +147,7 @@ export default Service.extend({
         };
       }
       this.global[name] = prop;
-    }, this);
+    });
   }
 }).reopenClass({
   skipGlobalize: null
