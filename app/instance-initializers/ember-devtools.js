@@ -1,3 +1,4 @@
+/* global window */
 import config from '../config/environment';
 
 export default {
