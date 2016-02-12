@@ -1,16 +1,19 @@
 /* global DS */
 import Ember from 'ember';
 var {
-  $,
   Service
 } = Ember;
 
 export default Service.extend({
-  container: null,
   renderedComponents: {},
   init() {
     this.global = this.global || window;
     this.console = this.console || window.console;
+    Object.defineProperty(this, 'container', {
+      get() {
+        return Ember.getOwner ? Ember.getOwner(this) : this.container;
+      }
+    });
     if (typeof DS === 'object') {
       this.store = this.lookup('service:store') ||
           this.lookup('store:main'); // for ember-data < 2
@@ -70,11 +73,20 @@ export default Service.extend({
   lookup(name) {
     return this.container.lookup(name);
   },
-  lookupFactory(name) {
-    return this.container.lookupFactory(name);
+  resolveRegistration(name) {
+    return this.container.resolveRegistration
+        // ember < 2.3.1
+        ? this.container.resolveRegistration(name)
+        // previous ember versions
+        : this.container.lookupFactory(name);
   },
   containerNameFor(object) {
-    var cache = this.container.cache || this.container._defaultContainer.cache;
+    var cache =
+        // ember 2.3.1
+        Ember.get(this.container, '__container__.cache')
+        // previous ember versions
+        || Ember.get(this.container, '_defaultContainer.cache')
+        || this.container.cache;
     var keys = Object.keys(cache);
     for (var i = 0; i < keys.length; i++) {
       if (cache[keys[i]] === object) return keys[i];
@@ -129,23 +141,25 @@ export default Service.extend({
     return serious;
   },
   environment() {
-    return this.lookupFactory('config:environment');
+    return this.resolveRegistration('config:environment');
   },
   globalize() {
     var props = ['app', 'container', 'store', 'typeMaps',
         'route', 'controller', 'model', 'service', 'routes', 'view', 'component', 
-        'currentRouteName', 'currentPath', 'log', 'lookup', 'lookupFactory', 'containerNameFor',
+        'currentRouteName', 'currentPath', 'log', 'lookup', 'resolveRegistration', 'containerNameFor',
         'inspect', 'logResolver', 'logAll'];
     // don't stomp on pre-existing global vars
     var skipGlobalize = this.constructor.skipGlobalize;
     if (skipGlobalize === null) {
       skipGlobalize = this.constructor.skipGlobalize = props.filter(prop => !Ember.isNone(this.global[prop]));
     }
-    props.map((name) => {
+    props.map(name => {
       if (skipGlobalize.indexOf(name) !== -1) return;
       var prop = this[name];
       if (typeof prop === 'function') {
-        prop = prop.bind(this);
+        prop = function() {
+          return this[name].apply(this, arguments);
+        };
       }
       this.global[name] = prop;
     });

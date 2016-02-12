@@ -25,7 +25,7 @@ Setting `global` will allow access to the `devTools` functions globally (eg. you
 
 The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
 
-Alternatively you can use `Ember.inject.service('ember-devtools')` or `container.lookup('service:ember-devtools')`.
+Alternatively you can use `Ember.inject.service('ember-devtools')` or `appInstance.lookup('service:ember-devtools')`.
 
 ## Functions
 
@@ -85,10 +85,9 @@ If `getEach` is true then `$E.getEach(property)` will be logged.
 Performs a lookup for the named entry in the `container`, which will in turn
 ask its `resolver` if it's not found.
 
-### `lookupFactory(name)`
+### `resolveRegistration(name)`
 
-Performs a lookup for the named factory (as opposed to a new instance) in the `container`,
-which will in turn ask its `resolver` if it's not found.
+Performs a lookup for the named factory in the `registry`.
 
 ### `containerNameFor(obj)`
 
