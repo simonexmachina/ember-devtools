@@ -9,11 +9,13 @@ export default Service.extend({
   init() {
     this.global = this.global || window;
     this.console = this.console || window.console;
-    Object.defineProperty(this, 'container', {
-      get() {
-        return Ember.getOwner ? Ember.getOwner(this) : this.container;
-      }
-    });
+    if (Ember.getOwner) { // for ember > 2.3
+      Object.defineProperty(this, 'container', {
+        get() {
+          return Ember.getOwner(this);
+        }
+      });
+    }
     if (typeof DS === 'object') {
       this.store = this.lookup('service:store') ||
           this.lookup('store:main'); // for ember-data < 2
@@ -123,7 +125,7 @@ export default Service.extend({
         if (!ocurrences) {
           self.set(logId, []);
         }
-        
+
         self.get(logId).push(duration);
 
         console.log('%c rendered ' + id + ' in ' + duration + 'ms', 'color: ' + color);
@@ -145,7 +147,7 @@ export default Service.extend({
   },
   globalize() {
     var props = ['app', 'container', 'store', 'typeMaps',
-        'route', 'controller', 'model', 'service', 'routes', 'view', 'component', 
+        'route', 'controller', 'model', 'service', 'routes', 'view', 'component',
         'currentRouteName', 'currentPath', 'log', 'lookup', 'resolveRegistration', 'containerNameFor',
         'inspect', 'logResolver', 'logAll'];
     // don't stomp on pre-existing global vars
