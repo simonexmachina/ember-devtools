@@ -159,9 +159,7 @@ export default Service.extend({
       if (skipGlobalize.indexOf(name) !== -1) return;
       var prop = this[name];
       if (typeof prop === 'function') {
-        prop = function() {
-          return this[name].apply(this, arguments);
-        };
+        prop = () => this[name].apply(this, arguments);
       }
       this.global[name] = prop;
     });
