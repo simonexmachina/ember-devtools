@@ -155,11 +155,14 @@ export default Service.extend({
     if (skipGlobalize === null) {
       skipGlobalize = this.constructor.skipGlobalize = props.filter(prop => !Ember.isNone(this.global[prop]));
     }
+    var self = this;
     props.map(name => {
       if (skipGlobalize.indexOf(name) !== -1) return;
       var prop = this[name];
       if (typeof prop === 'function') {
-        prop = () => this[name].apply(this, arguments);
+        prop = function() { // arguments variable is wrong if we use an arrow function here
+          self[name].apply(self, arguments);
+        }
       }
       this.global[name] = prop;
     });
