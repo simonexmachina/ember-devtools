@@ -161,7 +161,7 @@ export default Service.extend({
       var prop = this[name];
       if (typeof prop === 'function') {
         prop = function() { // arguments variable is wrong if we use an arrow function here
-          self[name].apply(self, arguments);
+          return self[name].apply(self, arguments);
         }
       }
       this.global[name] = prop;
