@@ -1,10 +1,10 @@
 {
   "name": "ember-devtools",
   "dependencies": {
-    "ember": "components/ember#release",
+    "ember": "components/ember#beta",
     "ember-cli-shims": "0.0.6",
     "ember-cli-test-loader": "0.2.1",
-    "ember-data": "components/ember-data#release",
+    "ember-data": "components/ember-data#beta",
     "ember-load-initializers": "0.1.7",
     "ember-qunit": "0.4.16",
     "ember-qunit-notifications": "0.1.0",
@@ -14,7 +14,7 @@
     "qunit": "~1.20.0"
   },
   "resolutions": {
-    "ember": "release",
-    "ember-data": "components/ember-data#release"
+    "ember": "beta",
+    "ember-data": "components/ember-data#beta"
   }
 }

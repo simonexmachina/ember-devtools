@@ -16,11 +16,12 @@ export default Service.extend({
         }
       });
     }
-    if (typeof DS === 'object') {
-      this.store = this.lookup('service:store') ||
+    Object.defineProperty(this, 'store', {
+      get() {
+        return this.lookup('service:store') ||
           this.lookup('store:main'); // for ember-data < 2
-      this.typeMaps = this.store.typeMaps;
-    }
+      }
+    });
   },
   consoleLog() {
     this.console.log(...arguments);
@@ -49,12 +50,12 @@ export default Service.extend({
   routes() {
     return Object.keys(this.router().recognizer.names);
   },
-  component(idDomElementOrSelector, type) {
-   if (typeof idDomElementOrSelector === 'object') {
-     idDomElementOrSelector = idDomElementOrSelector.id;
-   }
-   return this.lookup(`component:${type}::${idDomElementOrSelector}`);
-  },
+  // component(idDomElementOrSelector, type) {
+  //  if (typeof idDomElementOrSelector === 'object') {
+  //    idDomElementOrSelector = idDomElementOrSelector.id;
+  //  }
+  //  return this.lookup(`component:${type}::${idDomElementOrSelector}`);
+  // },
   currentRouteName() {
     return this.controller('application').get('currentRouteName');
   },

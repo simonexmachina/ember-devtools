@@ -8,7 +8,6 @@ import startApp from '../helpers/start-app';
 import config from "dummy/config/environment";
 
 var app;
-var componentType = 'test-component';
 
 module('Acceptance: ember-devtools', {
   beforeEach() {
@@ -90,76 +89,32 @@ test('routes() returns a list of route names', function(assert) {
   });
 });
 
-test('component() returns a component for an element', function(assert) {
- visit('/foo');
- andThen(function() {
-   var $el = Ember.$(`.${componentType}`);
-   var view = devTools.component($el.get(0), componentType);
-   assert.ok(view instanceof Ember.Component);
- });
-});
-
-test('component() returns a component for an element id', function(assert) {
- visit('/foo');
- andThen(function() {
-   var $el = Ember.$(`.${componentType}`);
-   var view = devTools.component($el.attr('id'), componentType);
-   assert.ok(view instanceof Ember.Component);
- });
-});
-
-test('environment() returns application environment', function(assert) {
- visit('/foo');
- andThen(function() {
-   let env = devTools.environment();
-   assert.ok(env === config);
- });
-});
-//
-//test('component() returns a component for a component name', function(assert) {
+// var componentType = 'test-component';
+// test('component() returns a component for an element', function(assert) {
 //  visit('/foo');
 //  andThen(function() {
-//    var view = devTools.component('test-component');
-//    assert.ok(view instanceof TestComponent);
-//  });
-//});
-//
-//test('component() returns the first view that matches a selector', function(assert) {
-//  visit('/foo');
-//  andThen(function() {
-//    var view = devTools.component('.ember-view');
+//    var $el = Ember.$(`.${componentType}`);
+//    var view = devTools.component($el.get(0), componentType);
 //    assert.ok(view instanceof Ember.Component);
 //  });
-//});
+// });
 //
-//test('components() returns all views that match a view type', function(assert) {
+// test('component() returns a component for an element id', function(assert) {
 //  visit('/foo');
 //  andThen(function() {
-//    var views = devTools.components('foo');
-//    assert.equal(views.length, 1);
-//    assert.ok(views[0] instanceof FooView);
+//    var $el = Ember.$(`.${componentType}`);
+//    var view = devTools.component($el.attr('id'), componentType);
+//    assert.ok(view instanceof Ember.Component);
 //  });
-//});
+// });
 //
-//test('components() returns all views that match a component type', function(assert) {
+// test('environment() returns application environment', function(assert) {
 //  visit('/foo');
 //  andThen(function() {
-//    var views = devTools.components('test-component');
-//    assert.equal(views.length, 2);
-//    assert.ok(views[0] instanceof TestComponent);
-//    assert.ok(views[1] instanceof TestComponent);
+//    let env = devTools.environment();
+//    assert.ok(env === config);
 //  });
-//});
-//
-//test('components() returns all views that match a selector', function(assert) {
-//  visit('/foo');
-//  andThen(function() {
-//    var views = devTools.components('.test-component');
-//    assert.equal(views.length, 2);
-//    assert.ok(views[0] instanceof TestComponent);
-//    assert.ok(views[1] instanceof TestComponent);
-//  });
-//});
+// });
 
 test('currentRouteName() does what it says', function(assert) {
   visit('/bar/nested/quz');

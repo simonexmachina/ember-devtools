@@ -57,10 +57,6 @@ Performs a lookup for the named service in the `container` (using ``'service:' +
 
 Returns the named controller. `name` defaults to the current route.
 
-### `component(idDomElementOrSelector, type)`
-
-Returns the component intance based his id and type.
-
 ### `log(promise[, property[, getEach]])`
 
 Resolves the `promise` and logs the resolved value using `console.log`.
