@@ -4,7 +4,7 @@
 module.exports = {
   name: 'ember-devtools',
   isEnabled: function() {
-    var addonConfig = this.app.project.config(this.app.env)['ember-devtools'];
-    return addonConfig.enabled;
+    var options = (this.app && this.app.options && this.app.options['ember-devtools']) || {}
+    return options.enabled;
   }
 };
