@@ -21,7 +21,7 @@ var ENV = {
 }
 ```
 
-Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console). If you'd prefer these functions to be under a prefix set `global: 'foo'` for `foo.routes()`.
+Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console). If you'd prefer these functions to be under a prefix set `global: 'devTools'` for `devTools.routes()`.
 
 The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
 
