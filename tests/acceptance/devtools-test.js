@@ -108,13 +108,13 @@ test('routes() returns a list of route names', function(assert) {
 //  });
 // });
 //
-// test('environment() returns application environment', function(assert) {
-//  visit('/foo');
-//  andThen(function() {
-//    let env = devTools.environment();
-//    assert.ok(env === config);
-//  });
-// });
+test('config() returns application config', function(assert) {
+ visit('/foo');
+ andThen(function() {
+   let env = devTools.config();
+   assert.ok(env === config);
+ });
+});
 
 test('currentRouteName() does what it says', function(assert) {
   visit('/bar/nested/quz');

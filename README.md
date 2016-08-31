@@ -118,9 +118,9 @@ The Ember Data `Store`.
 
 The Ember Data 'type map'.
 
-### `environment`
+### `config`
 
-Returns the Application environment
+Returns the Application config
 
 ## Installation
 

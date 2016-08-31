@@ -144,17 +144,23 @@ export default Service.extend({
     return serious;
   },
   environment() {
+    Ember.deprecate('environment() has been deprecated, please use config() instead');
+  },
+  config() {
     return this.resolveRegistration('config:environment');
   },
   globalize() {
-    var props = ['app', 'container', 'store', 'typeMaps',
-        'route', 'controller', 'model', 'service', 'routes', 'view', 'component',
-        'currentRouteName', 'currentPath', 'log', 'lookup', 'resolveRegistration', 'containerNameFor',
-        'inspect', 'logResolver', 'logAll'];
+    var props = ['app', 'container', 'store', 'typeMaps', 'route', 'controller', 'model',
+      'service', 'routes', 'view', 'component', 'currentRouteName', 'currentPath',
+      'log', 'lookup', 'resolveRegistration', 'containerNameFor', 'inspect',
+      'logResolver', 'logAll', 'environment', 'config'
+    ];
     // don't stomp on pre-existing global vars
     var skipGlobalize = this.constructor.skipGlobalize;
     if (skipGlobalize === null) {
-      skipGlobalize = this.constructor.skipGlobalize = props.filter(prop => !Ember.isNone(this.global[prop]));
+      skipGlobalize = this.constructor.skipGlobalize = props.filter(
+        prop => !Ember.isNone(this.global[prop])
+      );
     }
     var self = this;
     props.map(name => {
