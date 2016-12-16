@@ -2,7 +2,11 @@
   "name": "ember-devtools",
   "version": "5.1.1",
   "description": "A collection of useful functions for developing Ember apps",
-  "repository": "",
+  "homepage": "https://github.com/aexmachina/ember-devtools",
+  "repository": "aexmachina/ember-devtools",
+  "bugs": {
+    "url": "https://github.com/aexmachina/ember-devtools/issues"
+  },
   "keywords": [
     "ember-addon"
   ],
