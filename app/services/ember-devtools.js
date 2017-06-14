@@ -10,7 +10,7 @@ export default Service.extend({
     this.global = this.global || window;
     this.console = this.console || window.console;
     if (Ember.getOwner) { // for ember > 2.3
-      Object.defineProperty(this, 'container', {
+      Object.defineProperty(this, 'owner', {
         get() {
           return Ember.getOwner(this);
         }
@@ -74,22 +74,22 @@ export default Service.extend({
     });
   },
   lookup(name) {
-    return this.container.lookup(name);
+    return this.owner.lookup(name);
   },
   resolveRegistration(name) {
-    return this.container.resolveRegistration
+    return this.owner.resolveRegistration
         // ember < 2.3.1
-        ? this.container.resolveRegistration(name)
+        ? this.owner.resolveRegistration(name)
         // previous ember versions
-        : this.container.lookupFactory(name);
+        : this.owner.lookupFactory(name);
   },
-  containerNameFor(object) {
+  ownerNameFor(object) {
     var cache =
         // ember 2.3.1
-        Ember.get(this.container, '__container__.cache')
+        Ember.get(this.owner, '__container__.cache')
         // previous ember versions
-        || Ember.get(this.container, '_defaultContainer.cache')
-        || this.container.cache;
+        || Ember.get(this.owner, '_defaultContainer.cache')
+        || this.owner.cache;
     var keys = Object.keys(cache);
     for (var i = 0; i < keys.length; i++) {
       if (cache[keys[i]] === object) return keys[i];
@@ -150,9 +150,9 @@ export default Service.extend({
     return this.resolveRegistration('config:environment');
   },
   globalize() {
-    var props = ['app', 'container', 'store', 'typeMaps', 'route', 'controller', 'model',
+    var props = ['app', 'owner', 'store', 'typeMaps', 'route', 'controller', 'model',
       'service', 'routes', 'view', 'component', 'currentRouteName', 'currentPath',
-      'log', 'lookup', 'resolveRegistration', 'containerNameFor', 'inspect',
+      'log', 'lookup', 'resolveRegistration', 'ownerNameFor', 'inspect',
       'logResolver', 'logAll', 'environment', 'config'
     ];
     // don't stomp on pre-existing global vars
