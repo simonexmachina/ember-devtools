@@ -11,5 +11,5 @@ module.exports = function(environment, appConfig) {
     global: false
   }, appConfig['ember-devtools'] || {});
 
-  return {};
+  return { };
 };

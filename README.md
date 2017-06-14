@@ -8,8 +8,8 @@ A collection of useful functions for developing Ember apps. Best served from the
 
 ## Usage
 
-ember-devtools is an `Ember.Service` that can be accessed from the container, although it's most
-useful when available in the console. The simplest was access this from the console is using
+ember-devtools is an `Ember.Service` that is most useful when available in the devtools 
+console. The simplest was access this from the console is using
 a global variable (eww!) which can be defined in `config/environment.js`.
 
 ```js
@@ -51,7 +51,7 @@ Returns the model for the named controller. `name` defaults to the the current r
 
 ### `service(name)`
 
-Performs a lookup for the named service in the `container` (using ``'service:' + name`).
+Performs a lookup for the named service in the `owner` (using `'service:' + name`).
 
 ### `controller([name])`
 
@@ -78,16 +78,16 @@ If `getEach` is true then `$E.getEach(property)` will be logged.
 
 ### `lookup(name)`
 
-Performs a lookup for the named entry in the `container`, which will in turn
+Performs a lookup for the named entry in the `owner`, which will in turn
 ask its `resolver` if it's not found.
 
 ### `resolveRegistration(name)`
 
 Performs a lookup for the named factory in the `registry`.
 
-### `containerNameFor(obj)`
+### `ownerNameFor(obj)`
 
-Searches the `container` to find the name for the specified object (if any).
+Searches the `owner` to find the name for the specified object (if any).
 
 ### `inspect`
 
@@ -131,3 +131,7 @@ Returns the Application config
 ### Upgrading From v2.0
 
 ember-devtools is now dependent on ember-cli.
+
+## Changelog
+
+- v6: `container` and `containerNameFor` are now `owner` and `ownerNameFor`
