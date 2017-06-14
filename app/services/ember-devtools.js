@@ -50,12 +50,6 @@ export default Service.extend({
   routes() {
     return Object.keys(this.router().recognizer.names);
   },
-  // component(idDomElementOrSelector, type) {
-  //  if (typeof idDomElementOrSelector === 'object') {
-  //    idDomElementOrSelector = idDomElementOrSelector.id;
-  //  }
-  //  return this.lookup(`component:${type}::${idDomElementOrSelector}`);
-  // },
   currentRouteName() {
     return this.controller('application').get('currentRouteName');
   },
@@ -149,9 +143,12 @@ export default Service.extend({
   config() {
     return this.resolveRegistration('config:environment');
   },
+  getOwner() {
+    return this.owner;
+  },
   globalize() {
-    var props = ['app', 'owner', 'store', 'typeMaps', 'route', 'controller', 'model',
-      'service', 'routes', 'view', 'component', 'currentRouteName', 'currentPath',
+    var props = ['app', 'getOwner', 'store', 'typeMaps', 'route', 'controller', 'model',
+      'service', 'routes', 'view', 'currentRouteName', 'currentPath',
       'log', 'lookup', 'resolveRegistration', 'ownerNameFor', 'inspect',
       'logResolver', 'logAll', 'environment', 'config'
     ];

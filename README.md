@@ -21,7 +21,9 @@ var ENV = {
 }
 ```
 
-Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console). If you'd prefer these functions to be under a prefix set `global: 'devTools'` for `devTools.routes()`.
+Setting `global` will allow access to the `devTools` functions globally (eg. you can 
+run `routes()` in the console). If you'd prefer these functions to be under a prefix 
+set `global: 'devTools'` for `devTools.routes()`.
 
 The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
 
@@ -110,6 +112,20 @@ Logs the rendering duration (in milliseconds) of each component, view and helper
 Attach all of these useful functions to the `window` object (eww!) - useful
 for accessing in the console.
 
+### `getOwner(obj = this)`
+
+The owner of the service or specified `obj`.
+
+### `config()`
+
+Returns the Application config
+
+## Properties
+
+### `owner`
+
+The owner of the service. n.b. this is not globalised (to avoid conflict with `window.owner`), use `getOwner()` instead.
+ 
 ### `store`
 
 The Ember Data `Store`.
@@ -117,10 +133,6 @@ The Ember Data `Store`.
 ### `typeMaps`
 
 The Ember Data 'type map'.
-
-### `config`
-
-Returns the Application config
 
 ## Installation
 

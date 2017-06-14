@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 import {
   moduleFor,
   test
@@ -75,14 +76,14 @@ test('globalize() attaches stuff to the global scope', function(assert) {
     global: global
   });
   devTools.globalize();
-  assert.ok(global.container === this.subject().container);
+  assert.ok(global.store === this.subject().store);
 });
 
 test('globalize() doesn\'t stomp on pre-existing global vars', function(assert) {
-  var global = {container: 'foo'};
+  var global = {owner: 'foo'};
   var devTools = this.subject({
     global: global
   });
   devTools.globalize();
-  assert.ok(global.container !== this.subject().container);
+  assert.ok(global.owner !== this.subject().owner);
 });
