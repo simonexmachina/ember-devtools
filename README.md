@@ -8,8 +8,8 @@ A collection of useful functions for developing Ember apps. Best served from the
 
 ## Usage
 
-ember-devtools is an `Ember.Service` that can be accessed from the container, although it's most
-useful when available in the console. The simplest was access this from the console is using
+ember-devtools is an `Ember.Service` that is most useful when available in the devtools 
+console. The simplest was access this from the console is using
 a global variable (eww!) which can be defined in `config/environment.js`.
 
 ```js
@@ -21,7 +21,9 @@ var ENV = {
 }
 ```
 
-Setting `global` will allow access to the `devTools` functions globally (eg. you can run `routes()` in the console). If you'd prefer these functions to be under a prefix set `global: 'devTools'` for `devTools.routes()`.
+Setting `global` will allow access to the `devTools` functions globally (eg. you can 
+run `routes()` in the console). If you'd prefer these functions to be under a prefix 
+set `global: 'devTools'` for `devTools.routes()`.
 
 The `enabled` option will enable the addon. By default, this addon will only be included in the `development` environment.
 
@@ -51,7 +53,7 @@ Returns the model for the named controller. `name` defaults to the the current r
 
 ### `service(name)`
 
-Performs a lookup for the named service in the `container` (using ``'service:' + name`).
+Performs a lookup for the named service in the `owner` (using `'service:' + name`).
 
 ### `controller([name])`
 
@@ -78,16 +80,16 @@ If `getEach` is true then `$E.getEach(property)` will be logged.
 
 ### `lookup(name)`
 
-Performs a lookup for the named entry in the `container`, which will in turn
+Performs a lookup for the named entry in the `owner`, which will in turn
 ask its `resolver` if it's not found.
 
 ### `resolveRegistration(name)`
 
 Performs a lookup for the named factory in the `registry`.
 
-### `containerNameFor(obj)`
+### `ownerNameFor(obj)`
 
-Searches the `container` to find the name for the specified object (if any).
+Searches the `owner` to find the name for the specified object (if any).
 
 ### `inspect`
 
@@ -110,6 +112,20 @@ Logs the rendering duration (in milliseconds) of each component, view and helper
 Attach all of these useful functions to the `window` object (eww!) - useful
 for accessing in the console.
 
+### `getOwner(obj = this)`
+
+The owner of the service or specified `obj`.
+
+### `config()`
+
+Returns the Application config
+
+## Properties
+
+### `owner`
+
+The owner of the service. n.b. this is not globalised (to avoid conflict with `window.owner`), use `getOwner()` instead.
+ 
 ### `store`
 
 The Ember Data `Store`.
@@ -117,10 +133,6 @@ The Ember Data `Store`.
 ### `typeMaps`
 
 The Ember Data 'type map'.
-
-### `config`
-
-Returns the Application config
 
 ## Installation
 
@@ -131,3 +143,7 @@ Returns the Application config
 ### Upgrading From v2.0
 
 ember-devtools is now dependent on ember-cli.
+
+## Changelog
+
+- v6: `container` and `containerNameFor` are now `owner` and `ownerNameFor`

@@ -18,11 +18,11 @@ module('Acceptance: ember-devtools', {
   }
 });
 
-test('containerNameFor() returns the name of something in the container', function(assert) {
+test('ownerNameFor() returns the name of something in the container', function(assert) {
   visit('/');
   andThen(function() {
     var route = devTools.route('foo');
-    assert.equal(devTools.containerNameFor(route), 'route:foo');
+    assert.equal(devTools.ownerNameFor(route), 'route:foo');
   });
 });
 
