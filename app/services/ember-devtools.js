@@ -7,6 +7,7 @@ var {
 export default Service.extend({
   renderedComponents: {},
   init() {
+    this._super(...arguments);
     this.global = this.global || window;
     this.console = this.console || window.console;
     if (Ember.getOwner) { // for ember > 2.3
